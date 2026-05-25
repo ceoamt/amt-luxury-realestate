@@ -830,6 +830,88 @@ body {
   text-transform: uppercase;
 }
 
+/* Gallery panel inside mockup */
+.mock-gallery-panel {
+  margin-top: 12px;
+  background: var(--stone);
+  border: 1px solid rgba(14,13,11,0.08);
+  border-radius: 3px;
+  padding: 14px 18px;
+}
+
+.mock-gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mock-gallery-count {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.mock-gallery-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.mock-thumb {
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--stone-mid);
+  aspect-ratio: 4/3;
+}
+
+.mock-thumb--wide {
+  aspect-ratio: 16/9;
+}
+
+.mock-thumb-ph {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.mock-thumb-ph svg {
+  width: 14px; height: 14px;
+  color: rgba(14,13,11,0.2);
+}
+
+.mock-thumb-ph span {
+  font-family: var(--f-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(14,13,11,0.25);
+}
+
+.mock-thumb--more .mock-thumb-ph {
+  background: rgba(184,146,42,0.08);
+}
+
+.mock-thumb-more-count {
+  font-family: var(--f-serif);
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--gold);
+}
+
+/* Sidebar gallery nav item highlight */
+.mock-nav-gallery {
+  color: var(--gold) !important;
+  opacity: 0.8;
+}
+
 /* DXF badge */
 .mock-dxf {
   display: flex;
@@ -1901,6 +1983,14 @@ body {
             </svg>
             Analytics
           </div>
+          <div class="mock-nav-item mock-nav-gallery">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="2" width="12" height="10" rx="1" stroke="currentColor" stroke-width="1"/>
+              <circle cx="4.5" cy="5.5" r="1.2" stroke="currentColor" stroke-width="0.8"/>
+              <path d="M1 10l3-3 2.5 2 2.5-3L13 10" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/>
+            </svg>
+            Galleria
+          </div>
         </div>
       </div>
 
@@ -1989,6 +2079,46 @@ body {
             </div>
           </div>
         </div>
+
+        <!-- Gallery panel -->
+        <div class="mock-gallery-panel">
+          <div class="mock-gallery-header">
+            <div class="mock-panel-label" style="margin-bottom:0;">Galleria fotografica</div>
+            <div class="mock-gallery-count">48 foto</div>
+          </div>
+          <div class="mock-gallery-grid">
+            <div class="mock-thumb mock-thumb--wide">
+              <div class="mock-thumb-ph">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+                <span>Salone</span>
+              </div>
+            </div>
+            <div class="mock-thumb">
+              <div class="mock-thumb-ph">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+                <span>Esterno</span>
+              </div>
+            </div>
+            <div class="mock-thumb">
+              <div class="mock-thumb-ph">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+                <span>Camera</span>
+              </div>
+            </div>
+            <div class="mock-thumb">
+              <div class="mock-thumb-ph">
+                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
+                <span>Cucina</span>
+              </div>
+            </div>
+            <div class="mock-thumb mock-thumb--more">
+              <div class="mock-thumb-ph">
+                <span class="mock-thumb-more-count">+44</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
