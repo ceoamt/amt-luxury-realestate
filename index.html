@@ -901,6 +901,174 @@ body {
 }
 
 /* ══════════════════════════════════════════════════
+   GALLERY SECTION
+══════════════════════════════════════════════════ */
+.gallery-section {
+  background: var(--stone);
+  padding: 120px 0;
+}
+
+.gallery-section .section-header {
+  padding: 0 72px 64px;
+  border-bottom: 1px solid rgba(14,13,11,0.08);
+  margin-bottom: 64px;
+}
+
+.gallery-tabs {
+  display: flex;
+  gap: 32px;
+  padding: 0 72px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--stone-dark);
+}
+
+.gallery-tab {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(14,13,11,0.35);
+  padding-bottom: 14px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.gallery-tab.active {
+  color: var(--ink);
+}
+
+.gallery-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* Masonry-style grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 12px;
+  padding: 0 72px;
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--stone-mid);
+  cursor: pointer;
+}
+
+.gallery-item::before {
+  content: '';
+  display: block;
+  width: 100%;
+  padding-top: 66%;
+}
+
+.gallery-item:nth-child(1) { grid-column: span 7; }
+.gallery-item:nth-child(2) { grid-column: span 5; }
+.gallery-item:nth-child(3) { grid-column: span 4; }
+.gallery-item:nth-child(4) { grid-column: span 4; }
+.gallery-item:nth-child(5) { grid-column: span 4; }
+
+.gallery-item-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.gallery-item-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease-silk);
+}
+
+.gallery-item:hover .gallery-item-inner img {
+  transform: scale(1.04);
+}
+
+/* Placeholder quando non c'è immagine */
+.gallery-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--stone-mid);
+}
+
+.gallery-placeholder-icon {
+  width: 36px; height: 36px;
+  opacity: 0.2;
+}
+
+.gallery-placeholder-label {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(14,13,11,0.3);
+}
+
+/* Overlay caption */
+.gallery-caption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(14,13,11,0.55) 0%, transparent 100%);
+  padding: 32px 20px 16px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.gallery-item:hover .gallery-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-caption-title {
+  font-family: var(--f-serif);
+  font-size: 14px;
+  color: var(--ivory);
+  font-style: italic;
+}
+
+.gallery-caption-meta {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(250,248,244,0.6);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.gallery-cta {
+  padding: 48px 72px 0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.gallery-count {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(14,13,11,0.35);
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════
    VR / OUTPUT SECTION
 ══════════════════════════════════════════════════ */
 .output-section {
@@ -1878,6 +2046,128 @@ body {
       <div class="feature-name">Dashboard dedicata per immobile</div>
       <p class="feature-desc">URL univoco per ogni proprietà. Branding personalizzabile, accesso controllato per i potenziali acquirenti, link condivisibile con agenti e notai.</p>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     GALLERY SECTION
+═══════════════════════════════════ -->
+<section class="gallery-section reveal">
+  <div class="section-header gallery-section">
+    <div class="section-kicker" style="font-family:var(--f-mono);font-size:9px;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;">Galleria immobili</div>
+    <h2 class="section-title reveal" style="font-family:var(--f-serif);font-size:clamp(36px,4vw,56px);font-weight:300;line-height:1.1;color:var(--ink);margin-bottom:16px;">
+      Ogni spazio, <em>raccontato</em><br>con la giusta luce.
+    </h2>
+    <p style="font-family:var(--f-sans);font-size:15px;font-weight:300;color:var(--slate);max-width:520px;line-height:1.7;">
+      Fotografia professionale ad alta risoluzione integrata nella dashboard. Ogni immagine è ottimizzata, geolocalizzata e associata all'ambiente di riferimento.
+    </p>
+  </div>
+
+  <!-- Tabs proprietà -->
+  <div class="gallery-tabs">
+    <div class="gallery-tab active">Villa Malcontenta</div>
+    <div class="gallery-tab">Palazzo Grimani</div>
+    <div class="gallery-tab">Villa dei Cedri</div>
+  </div>
+
+  <!-- Griglia immagini -->
+  <div class="gallery-grid">
+
+    <!-- Item 1 — grande, salone principale -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <div class="gallery-placeholder">
+          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
+            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="gallery-placeholder-label">Salone principale</span>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title">Salone dei Specchi</div>
+        <div class="gallery-caption-meta">Piano terra · 85 mq</div>
+      </div>
+    </div>
+
+    <!-- Item 2 — vista esterna -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <div class="gallery-placeholder">
+          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
+            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="gallery-placeholder-label">Vista esterna</span>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title">Facciata sul Brenta</div>
+        <div class="gallery-caption-meta">Esterno · Vista canale</div>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <div class="gallery-placeholder">
+          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
+            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="gallery-placeholder-label">Camera padronale</span>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title">Camera padronale</div>
+        <div class="gallery-caption-meta">Primo piano · 42 mq</div>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <div class="gallery-placeholder">
+          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
+            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="gallery-placeholder-label">Cucina</span>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title">Cucina professionale</div>
+        <div class="gallery-caption-meta">Piano terra · 28 mq</div>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="gallery-item">
+      <div class="gallery-item-inner">
+        <div class="gallery-placeholder">
+          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
+            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <span class="gallery-placeholder-label">Giardino</span>
+        </div>
+      </div>
+      <div class="gallery-caption">
+        <div class="gallery-caption-title">Giardino storico</div>
+        <div class="gallery-caption-meta">Esterno · 3.200 mq</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gallery-cta">
+    <span class="gallery-count">5 di 48 immagini</span>
+    <a href="#" style="font-family:var(--f-mono);font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(184,146,42,0.3);padding-bottom:2px;">Visualizza galleria completa →</a>
   </div>
 </section>
 
