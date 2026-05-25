@@ -1499,6 +1499,44 @@ body {
   opacity: 0.8;
 }
 
+/* Tour Video AI — wide featured card */
+.output-card-wide {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  background: var(--ink) !important;
+  cursor: default;
+}
+.output-card-wide:hover { background: #16140f !important; }
+.output-card-wide-left {
+  width: 36%;
+  flex-shrink: 0;
+  padding: 40px 40px;
+  border-right: 1px solid rgba(184,146,42,0.15);
+  background: rgba(184,146,42,0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.output-card-wide-right {
+  flex: 1;
+  padding: 40px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.output-card-wide .output-card-num  { opacity: 1; }
+.output-card-wide .output-card-icon { font-size: 28px; }
+.output-card-wide .output-card-title { color: var(--gold); font-size: 22px; margin-bottom: 0; }
+.output-card-wide .output-card-desc  { color: rgba(250,248,244,0.60); font-size: 13px; opacity: 1; line-height: 1.75; }
+.output-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
 /* ══════════════════════════════════════════════════
    PROCESSO (timeline)
 ══════════════════════════════════════════════════ */
@@ -2668,6 +2706,26 @@ body {
     </div>
     <div class="feature-item reveal">
       <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Film strip -->
+        <rect x="3" y="13" width="28" height="14" rx="1" stroke="#b8922a" stroke-width="1"/>
+        <rect x="6"  y="13" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="12" y="13" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="18" y="13" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="24" y="13" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="6"  y="24" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="12" y="24" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="18" y="24" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <rect x="24" y="24" width="2.5" height="3" stroke="#b8922a" stroke-width="0.7"/>
+        <!-- Play arrow -->
+        <path d="M11 17.5L11 22.5L19 20Z" stroke="#b8922a" stroke-width="0.8"/>
+        <!-- AI sparkle -->
+        <path d="M36 5L37 8L40 9L37 10L36 13L35 10L32 9L35 8Z" stroke="#b8922a" stroke-width="0.7" opacity="0.75"/>
+      </svg>
+      <div class="feature-name">Tour Video AI</div>
+      <p class="feature-desc">A partire dai frame catturati all'interno del Digital Twin fotogrammetrico, l'AI pianifica un percorso cinematografico tra gli ambienti, interpola le transizioni, seleziona angolazioni e luce ottimali e genera un video 4K pronto alla pubblicazione — senza nessuna ripresa video aggiuntiva in loco.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="6" y="10" width="28" height="20" stroke="#b8922a" stroke-width="1"/>
         <path d="M6 18H34M6 22H34M14 10V30M26 10V30" stroke="#b8922a" stroke-width="0.5" opacity="0.5"/>
       </svg>
@@ -2876,6 +2934,28 @@ body {
       <h3 class="output-card-title">File CAD / DXF</h3>
       <p class="output-card-desc">Planimetrie vettoriali derivate dalla scansione. Compatibili con AutoCAD, ArchiCAD e tutti i software di progettazione.</p>
     </div>
+    <!-- Tour Video AI — featured wide card -->
+    <div class="output-card output-card-wide">
+      <div class="output-card-wide-left">
+        <div>
+          <div class="output-card-num">05</div>
+          <div class="output-card-icon" style="font-size:28px; margin-bottom:16px;">▶</div>
+          <h3 class="output-card-title">Tour Video AI</h3>
+        </div>
+        <div style="font-family:var(--f-mono);font-size:9px;letter-spacing:0.25em;color:rgba(184,146,42,0.5);text-transform:uppercase;margin-top:32px;">Generato dal Digital Twin</div>
+      </div>
+      <div class="output-card-wide-right">
+        <p class="output-card-desc">Video tour 4K generato direttamente dai frame renderizzati all'interno del Digital Twin fotogrammetrico. L'AI pianifica autonomamente il percorso attraverso gli ambienti, interpola le transizioni, sceglie angolazioni e condizioni di luce ottimali per ogni stanza.<br><br>
+        Il risultato è un video cinematografico fluido, con narrazione automatica e colonna sonora, pronto per sito web, social media, presentazioni e portali immobiliari. <strong style="color:rgba(250,248,244,0.85);">Zero costi di ripresa video aggiuntivi</strong> — il tour nasce interamente dal modello già prodotto.</p>
+        <div class="output-card-tags">
+          <span class="chip gold">AI-generated</span>
+          <span class="chip">Video 4K</span>
+          <span class="chip">Social-ready</span>
+          <span class="chip">Narrazione AI</span>
+          <span class="chip">Zero riprese extra</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2905,7 +2985,7 @@ body {
     <div class="timeline-step highlight reveal">
       <div class="timeline-node">03</div>
       <div class="timeline-label">Elaborazione</div>
-      <p class="timeline-note">Ricostruzione mesh, texturizzazione AI o reale, ottimizzazione LOD. Generazione del Digital Twin navigabile.</p>
+      <p class="timeline-note">Ricostruzione mesh, texturizzazione AI o reale, ottimizzazione LOD. Generazione del Digital Twin navigabile e del Tour Video AI.</p>
     </div>
     <div class="timeline-step reveal">
       <div class="timeline-node">04</div>
@@ -3069,6 +3149,10 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
+          Tour Video AI (fino a 3 min, 4K, narrazione inclusa)
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
           URL dedicato 24 mesi + branding personalizzato
         </div>
       </div>
@@ -3097,6 +3181,10 @@ body {
         <div class="price-item">
           <div class="price-item-dot"></div>
           Pannello di gestione centralizzato dei Digital Twin
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Tour Video AI per ogni unità del portfolio
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
