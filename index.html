@@ -632,7 +632,7 @@ body {
 .mockup-body {
   display: grid;
   grid-template-columns: 220px 1fr;
-  min-height: 640px;
+  min-height: 730px;
 }
 
 .mockup-sidebar {
@@ -1152,10 +1152,9 @@ body {
 /* ─── SVG VIEWER AREA ─── */
 .mock-twin-viewer {
   position: relative;
-  flex: 1;
   overflow: hidden;
-  min-height: 600px;
-  height: 600px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 .twin-svg {
   width: 100%; height: 100%;
@@ -2867,17 +2866,14 @@ body {
             AI Generated
           </div>
         </div>
-        <div class="mock-twin-viewer" style="background:#0a0a0a;display:flex;align-items:center;justify-content:center;">
-          <!-- wrapper 16:9 centrato — il video non viene mai stirato -->
-          <div style="width:100%;max-width:1067px;aspect-ratio:16/9;position:relative;flex-shrink:0;">
-            <iframe
-              src="https://www.youtube.com/embed/NTewjMfgYg8?rel=0&modestbranding=1&color=white"
-              style="position:absolute;inset:0;width:100%;height:100%;display:block;border:none;"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-              loading="lazy">
-            </iframe>
-          </div>
+        <div class="mock-twin-viewer" style="background:#000;">
+          <iframe
+            src="https://www.youtube.com/embed/NTewjMfgYg8?rel=0&modestbranding=1&color=white"
+            style="position:absolute;inset:0;width:100%;height:100%;display:block;border:none;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
         </div>
       </div>
     </div><!-- /mock-panel-video -->
