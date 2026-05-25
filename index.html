@@ -1089,6 +1089,45 @@ body {
   width: 100%;
 }
 
+/* ─── Ping dot — persists on inactive tabs until first click ─── */
+.tab-ping {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 7px; height: 7px;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+.tab-ping::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pingDot 1.8s ease-in-out infinite;
+}
+.tab-ping::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0;
+  animation: pingRing 1.8s ease-out infinite;
+}
+@keyframes pingDot {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%       { transform: scale(0.7); opacity: 0.6; }
+}
+@keyframes pingRing {
+  0%   { transform: scale(0.5); opacity: 0.7; }
+  70%  { transform: scale(2.4); opacity: 0; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.mvs-tab.mvs-active .tab-ping { display: none; }
+.tab-ping.dismissed     { display: none; }
+
 /* ─── Tab hint animation — fires once when mockup enters view ─── */
 @keyframes tabHint {
   0%   { transform: translateY(0) scale(1); }
@@ -2381,14 +2420,17 @@ body {
       <button class="mvs-tab" onclick="switchMockView('mock-panel-twin', this)">
         <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
         Digital Twin
+        <span class="tab-ping"></span>
       </button>
       <button class="mvs-tab" onclick="switchMockView('mock-panel-splat', this)">
         <svg viewBox="0 0 12 12" fill="none"><circle cx="3" cy="3" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="6.5" cy="1.8" r="0.9" fill="currentColor"/><circle cx="9.5" cy="3" r="0.8" fill="currentColor" opacity="0.6"/><circle cx="2" cy="6" r="0.8" fill="currentColor" opacity="0.5"/><circle cx="5.5" cy="5.5" r="1.1" fill="currentColor"/><circle cx="9" cy="6.5" r="0.9" fill="currentColor" opacity="0.8"/><circle cx="3" cy="9.5" r="0.8" fill="currentColor" opacity="0.55"/><circle cx="7" cy="9.5" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="10.5" cy="9" r="0.7" fill="currentColor" opacity="0.4"/></svg>
         Gaussian Splat
+        <span class="tab-ping"></span>
       </button>
       <button class="mvs-tab" onclick="switchMockView('mock-panel-video', this)">
         <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2.5" width="7.5" height="7" rx="1" stroke="currentColor" stroke-width="1"/><path d="M8.5 5l2.5-1.5v5L8.5 7" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
         Video AI
+        <span class="tab-ping"></span>
       </button>
       <span class="mvs-live-badge"><span class="mvs-live-dot"></span>Live demo</span>
     </div>
@@ -3466,6 +3508,8 @@ body {
   function switchMockView(targetId, btn) {
     const idx = MVS.panels.indexOf(targetId);
     if (idx === -1) return;
+    // rimuovi tutti i ping al primo click
+    document.querySelectorAll('.tab-ping').forEach(p => p.classList.add('dismissed'));
     MVS.go(idx);
   }
 
