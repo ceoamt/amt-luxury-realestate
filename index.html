@@ -1078,7 +1078,7 @@ body {
   pointer-events: none;
 }
 .mvs-progress.running {
-  transition: width 4.4s linear;
+  transition: width 5.5s linear;
   width: 100%;
 }
 
@@ -2357,6 +2357,11 @@ body {
         Digital Twin
         <span class="mvs-progress"></span>
       </button>
+      <button class="mvs-tab" onclick="switchMockView('mock-panel-splat', this)">
+        <svg viewBox="0 0 12 12" fill="none"><circle cx="3" cy="3" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="6.5" cy="1.8" r="0.9" fill="currentColor"/><circle cx="9.5" cy="3" r="0.8" fill="currentColor" opacity="0.6"/><circle cx="2" cy="6" r="0.8" fill="currentColor" opacity="0.5"/><circle cx="5.5" cy="5.5" r="1.1" fill="currentColor"/><circle cx="9" cy="6.5" r="0.9" fill="currentColor" opacity="0.8"/><circle cx="3" cy="9.5" r="0.8" fill="currentColor" opacity="0.55"/><circle cx="7" cy="9.5" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="10.5" cy="9" r="0.7" fill="currentColor" opacity="0.4"/></svg>
+        Gaussian Splat
+        <span class="mvs-progress"></span>
+      </button>
       <span class="mvs-live-badge"><span class="mvs-live-dot"></span>Live demo</span>
     </div>
 
@@ -2744,8 +2749,15 @@ body {
         <!-- SVG Viewer -->
         <div class="mock-twin-viewer">
 
-          <!-- Three.js WebGL Canvas -->
-          <canvas id="twin-canvas" style="width:100%;height:100%;display:block;cursor:grab;"></canvas>
+          <!-- Sketchfab: photorealistic baroque frescoed room -->
+          <iframe id="twin-sketchfab"
+            src="https://sketchfab.com/models/e6debc7c4ced49ddaeac8a1f1851172e/embed?autostart=1&ui_hint=0&preload=1&transparent=0&autospin=0.25&ui_watermark=0&ui_controls=0"
+            style="width:100%;height:100%;display:block;border:none;"
+            allow="autoplay; fullscreen; vr"
+            mozallowfullscreen="true"
+            webkitallowfullscreen="true"
+            loading="lazy">
+          </iframe>
 
           <!-- Floor selector -->
           <div class="mock-twin-floors">
@@ -2787,6 +2799,50 @@ body {
         </div><!-- /mock-twin-viewer -->
       </div><!-- /mock-twin-wrapper -->
     </div><!-- /mock-panel-twin -->
+
+    <!-- Panel 3: Gaussian Splat -->
+    <div id="mock-panel-splat" style="display:none;">
+      <div class="mock-twin-wrapper" style="background:#0f0c09;">
+
+        <!-- Mode bar -->
+        <div class="mock-twin-modebar" style="background:#1a1610;border-bottom-color:rgba(184,146,42,0.15);">
+          <button class="mtm-btn mtm-active" style="background:var(--gold)!important;color:var(--ink)!important;border-color:var(--gold)!important;">
+            <svg viewBox="0 0 12 12" fill="none"><circle cx="3" cy="3" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="6.5" cy="1.8" r="0.9" fill="currentColor"/><circle cx="9.5" cy="3" r="0.8" fill="currentColor" opacity="0.6"/><circle cx="5.5" cy="5.5" r="1.1" fill="currentColor"/><circle cx="9" cy="6.5" r="0.9" fill="currentColor" opacity="0.8"/><circle cx="3" cy="9.5" r="0.8" fill="currentColor" opacity="0.55"/><circle cx="7" cy="9.5" r="0.9" fill="currentColor" opacity="0.7"/></svg>
+            3DGS · Sparkles
+          </button>
+          <button class="mtm-btn" style="color:rgba(250,248,244,0.4);border-color:rgba(250,248,244,0.12);">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.6"/></svg>
+            NeRF
+          </button>
+          <div style="margin-left:auto;font-family:var(--f-mono);font-size:7px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(184,146,42,0.7);display:flex;align-items:center;gap:6px;padding-right:4px;">
+            <span style="width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block;animation:livePulse 1.6s ease-in-out infinite;"></span>
+            Luma AI · Real-time
+          </div>
+        </div>
+
+        <!-- Luma AI Gaussian Splat viewer -->
+        <div class="mock-twin-viewer" style="min-height:340px;">
+          <iframe
+            src="https://lumalabs.ai/embed/da82625c-9c8d-4d05-a9f7-3367ecab438c?mode=sparkles&background=%230f0c09&color=%23b8922a&showTitle=false&loadBg=true&logoPosition=bottom-left&infoPosition=bottom-right&showMenu=false"
+            style="width:100%;height:100%;display:block;border:none;"
+            allow="autoplay; fullscreen"
+            loading="lazy">
+          </iframe>
+
+          <!-- Bottom info -->
+          <div class="mock-twin-info" style="background:rgba(15,12,9,0.88);">
+            <span class="mti-name" style="color:rgba(250,248,244,0.9);">Château de Menthon</span>
+            <div class="mti-meta" style="color:rgba(250,248,244,0.45);">
+              <span>3DGS scan</span>
+              <span>Navigabile 6-DOF</span>
+              <span>Annecy, FR</span>
+            </div>
+            <span class="mti-badge" style="background:var(--gold);color:var(--ink);">Gaussian Splat</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /mock-panel-splat -->
 
   </div><!-- /dashboard-mockup -->
 
@@ -3292,11 +3348,11 @@ body {
 <script>
   /* ─── Mock panel auto-switch with fade ─── */
   const MVS = {
-    panels : ['mock-panel-dash', 'mock-panel-twin'],
+    panels : ['mock-panel-dash', 'mock-panel-twin', 'mock-panel-splat'],
     current: 0,
     timer  : null,
     paused : false,
-    DELAY  : 4400,   // ms each panel stays visible
+    DELAY  : 5500,   // ms each panel stays visible (3 panels → ~18s full cycle)
     FADE   : 300,    // ms cross-fade
     started: false,
 
@@ -3356,10 +3412,6 @@ body {
         toEl.style.opacity = '0';
         toEl.style.display = '';
         toEl.style.transition = `opacity ${this.FADE}ms ease`;
-
-        if (toId === 'mock-panel-twin') {
-          requestAnimationFrame(() => window._initTwinViewer?.());
-        }
 
         requestAnimationFrame(() => requestAnimationFrame(() => {
           toEl.style.opacity = '1';
