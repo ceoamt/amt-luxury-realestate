@@ -1931,6 +1931,21 @@ body {
 }
 
 /* ══════════════════════════════════════════════════
+   HERO SCAN CANVAS
+══════════════════════════════════════════════════ */
+#hero-canvas {
+  position: absolute;
+  top: 0; right: 0;
+  width: 48%; height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeIn 1.4s var(--ease-silk) 0.6s forwards;
+}
+@media (max-width: 768px) { #hero-canvas { display: none; } }
+
+/* ══════════════════════════════════════════════════
    ANIMATIONS
 ══════════════════════════════════════════════════ */
 @keyframes fadeUp {
@@ -1973,6 +1988,8 @@ body {
   <div class="hero-grid"></div>
   <div class="hero-line"></div>
 
+  <canvas id="hero-canvas"></canvas>
+
   <div class="hero-topbar">
     <div class="logo-amt"><img src="logo-amt-white.png" alt="AMTitalia" style="height:32px; width:auto; display:block;"></div>
     <div class="hero-date">Proposta commerciale — Giugno 2026</div>
@@ -1984,14 +2001,14 @@ body {
   </div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow">Gemello Digitale per Immobili di Pregio</div>
+    <div class="hero-eyebrow">Digital Twin per Immobili di Pregio</div>
     <h1 class="hero-title">
       Ogni immobile<br>
       merita il proprio<br>
-      <em>gemello digitale.</em>
+      <em>Digital Twin.</em>
     </h1>
     <p class="hero-subtitle">
-      Fotogrammetria professionale, gemello digitale navigabile piano per piano, dashboard dedicata per unità e output VR — un'identità digitale completa per ogni proprietà di pregio.
+      Fotogrammetria professionale, Digital Twin navigabile piano per piano, dashboard dedicata per unità e output VR — un'identità digitale completa per ogni proprietà di pregio.
     </p>
     <div class="hero-meta">
       <div class="hero-from">
@@ -2020,7 +2037,7 @@ body {
     </h2>
     <p class="manifesto-body">
       Un immobile di pregio non può essere raccontato da una galleria fotografica piatta. L'acquirente vuole capire lo spazio, vivere l'atmosfera, percepire la scala. Vuole esplorare — non solo guardare.<br><br>
-      AMTitalia costruisce per ogni immobile un <strong>gemello digitale</strong>: una replica navigabile dello spazio fisico che trasforma dati, geometria e narrazione in un'esperienza interattiva e memorabile. Fotogrammetria professionale, interni esplorabili piano per piano, affressi e dettagli architettonici fedeli all'originale.
+      AMTitalia costruisce per ogni immobile un <strong>Digital Twin</strong>: una replica navigabile dello spazio fisico che trasforma dati, geometria e narrazione in un'esperienza interattiva e memorabile. Fotogrammetria professionale, interni esplorabili piano per piano, affreschi e dettagli architettonici fedeli all'originale.
     </p>
   </div>
   <div class="manifesto-right">
@@ -2039,7 +2056,7 @@ body {
       </div>
       <div class="stat-cell">
         <div class="stat-num">100<span>%</span></div>
-        <div class="stat-label">gemello digitale dedicato per ogni proprietà</div>
+        <div class="stat-label">Digital Twin dedicato per ogni proprietà</div>
       </div>
     </div>
     <p class="manifesto-note">
@@ -2197,7 +2214,7 @@ body {
       </button>
       <button class="mvs-tab" onclick="switchMockView('mock-panel-twin', this)">
         <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
-        Gemello Digitale
+        Digital Twin
       </button>
     </div>
 
@@ -2630,7 +2647,7 @@ body {
               <span>18 ambienti</span>
               <span>Brenta Riviera</span>
             </div>
-            <span class="mti-badge">Gemello Digitale</span>
+            <span class="mti-badge">Digital Twin</span>
           </div>
 
         </div><!-- /mock-twin-viewer -->
@@ -2646,8 +2663,8 @@ body {
         <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="#b8922a" stroke-width="1" fill="none"/>
         <path d="M20 4V36M4 12L36 28M36 12L4 28" stroke="#b8922a" stroke-width="0.5" opacity="0.4"/>
       </svg>
-      <div class="feature-name">Gemello Digitale Navigabile</div>
-      <p class="feature-desc">Il cuore del servizio: un gemello digitale fotogrammetrico dell'immobile, esplorabile in prima persona direttamente nel browser — Three.js WebGL, nessun plugin. Affreschi, soffitti, materiali e scale percepibili come in sopralluogo.</p>
+      <div class="feature-name">Digital Twin Navigabile</div>
+      <p class="feature-desc">Il cuore del servizio: un Digital Twin fotogrammetrico dell'immobile, esplorabile in prima persona direttamente nel browser — Three.js WebGL, nessun plugin. Affreschi, soffitti, materiali e scale percepibili come in sopralluogo.</p>
     </div>
     <div class="feature-item reveal">
       <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2838,7 +2855,7 @@ body {
     <div class="output-card">
       <div class="output-card-num">01</div>
       <div class="output-card-icon">⬡</div>
-      <h3 class="output-card-title">Gemello Digitale (GLTF/GLB)</h3>
+      <h3 class="output-card-title">Digital Twin (GLTF/GLB)</h3>
       <p class="output-card-desc">Replica navigabile dell'immobile in formato GLTF/GLB — fotogrammetria reale, texture originali, interni esplorabili. Pronto per web, VR e archivio permanente della proprietà.</p>
     </div>
     <div class="output-card">
@@ -2888,7 +2905,7 @@ body {
     <div class="timeline-step highlight reveal">
       <div class="timeline-node">03</div>
       <div class="timeline-label">Elaborazione</div>
-      <p class="timeline-note">Ricostruzione mesh, texturizzazione AI o reale, ottimizzazione LOD. Generazione del gemello digitale navigabile.</p>
+      <p class="timeline-note">Ricostruzione mesh, texturizzazione AI o reale, ottimizzazione LOD. Generazione del Digital Twin navigabile.</p>
     </div>
     <div class="timeline-step reveal">
       <div class="timeline-node">04</div>
@@ -2915,7 +2932,7 @@ body {
       strategico.
     </h2>
     <p class="positioning-body">
-      AMTitalia non produce solo contenuto digitale. Costruisce il <strong>gemello digitale</strong> di ogni immobile: una replica navigabile che cambia la percezione dello spazio — e quindi il suo valore percepito, il tempo di vendita e la qualità dei potenziali acquirenti. Un asset permanente che sopravvive al mandato di vendita.
+      AMTitalia non produce solo contenuto digitale. Costruisce il <strong>Digital Twin</strong> di ogni immobile: una replica navigabile che cambia la percezione dello spazio — e quindi il suo valore percepito, il tempo di vendita e la qualità dei potenziali acquirenti. Un asset permanente che sopravvive al mandato di vendita.
     </p>
     <div class="positioning-pillars">
       <div class="pillar">
@@ -2924,7 +2941,7 @@ body {
       </div>
       <div class="pillar">
         <div class="pillar-idx">02</div>
-        <div class="pillar-text"><strong>Gemello digitale su misura</strong> — fotogrammetria reale o Laser+AI, ogni immobile ha la propria replica navigabile con la sua identità digitale esclusiva.</div>
+        <div class="pillar-text"><strong>Digital Twin su misura</strong> — fotogrammetria reale o Laser+AI, ogni immobile ha la propria replica navigabile con la sua identità digitale esclusiva.</div>
       </div>
       <div class="pillar">
         <div class="pillar-idx">03</div>
@@ -2955,7 +2972,7 @@ body {
       <div class="pos-val">Alto</div>
     </div>
     <div class="pos-row">
-      <div class="pos-label">Gemello Digitale + Dashboard</div>
+      <div class="pos-label">Digital Twin + Dashboard</div>
       <div class="pos-bar"><div class="pos-fill" style="width: 100%"></div></div>
       <div class="pos-val" style="color: var(--gold-light); font-weight: 500;">Premium</div>
     </div>
@@ -3001,7 +3018,7 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
-          Gemello digitale navigabile (Three.js WebGL)
+          Digital Twin navigabile (Three.js WebGL)
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
@@ -3028,7 +3045,7 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
-          Gemello digitale fotogrammetrico (texture reali)
+          Digital Twin fotogrammetrico (texture reali)
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
@@ -3036,7 +3053,7 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
-          Gemello navigabile web + output VR standalone
+          Digital Twin navigabile web + output VR standalone
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
@@ -3071,7 +3088,7 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
-          Gemello digitale per ogni unità (tier A o B)
+          Digital Twin per ogni unità (tier A o B)
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
@@ -3079,7 +3096,7 @@ body {
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
-          Pannello di gestione centralizzato dei gemelli
+          Pannello di gestione centralizzato dei Digital Twin
         </div>
         <div class="price-item">
           <div class="price-item-dot"></div>
@@ -3107,7 +3124,7 @@ body {
     per primo?
   </h2>
   <p class="cta-sub reveal">
-    Partiamo da un immobile pilota. Ti consegniamo il gemello digitale completo — navigabile, condivisibile, archivabile — prima di qualsiasi impegno su scala.
+    Partiamo da un immobile pilota. Ti consegniamo il Digital Twin completo — navigabile, condivisibile, archivabile — prima di qualsiasi impegno su scala.
   </p>
   <div class="cta-actions reveal">
     <a href="mailto:info@amtitalia.com?subject=Proposta Dashboard Immobiliare" class="btn-primary">Contattaci ora</a>
@@ -3602,6 +3619,211 @@ function initTwinViewer() {
 
 
 window._initTwinViewer = initTwinViewer;
+</script>
+
+<!-- ═══════════════════════════════════
+     HERO — Scan-line Digital Twin animation
+═══════════════════════════════════ -->
+<script type="module">
+import * as THREE from 'three';
+
+(function heroScanAnim() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.localClippingEnabled = true;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+  camera.position.set(2.8, 2.8, 8.0);
+  camera.lookAt(0, 1.8, 0);
+
+  const GOLD  = new THREE.Color(0xb8922a);
+  const IVORY = new THREE.Color(0xfaf8f4);
+  const GOLD_DIM = new THREE.Color(0x7a5e1a);
+
+  // Clipping plane: hides y > constant (reveals bottom→top)
+  const SCAN_MIN = -0.2;
+  const SCAN_MAX = 4.3;
+  const clipPlane = new THREE.Plane(new THREE.Vector3(0, -1, 0), SCAN_MIN);
+
+  function mkWire(col, op) {
+    return new THREE.LineBasicMaterial({
+      color: col, transparent: true, opacity: op,
+      clippingPlanes: [clipPlane]
+    });
+  }
+
+  function addBox(grp, x, y, z, w, h, d, mat) {
+    const geo = new THREE.EdgesGeometry(new THREE.BoxGeometry(w, h, d));
+    const mesh = new THREE.LineSegments(geo, mat);
+    mesh.position.set(x, y + h * 0.5, z);
+    grp.add(mesh);
+  }
+
+  const palazzo = new THREE.Group();
+  scene.add(palazzo);
+
+  const mG  = mkWire(GOLD,     0.85);
+  const mGd = mkWire(GOLD_DIM, 0.55);
+  const mIv = mkWire(IVORY,    0.28);
+
+  // ─── Corpo principale ───
+  addBox(palazzo,  0,  0,    0,  4.2, 1.15, 1.4,  mG);   // piano terra
+  addBox(palazzo,  0,  1.15, 0,  4.2, 1.55, 1.4,  mG);   // piano nobile
+  addBox(palazzo,  0,  2.70, 0,  3.9, 0.65, 1.35, mGd);  // attico
+  addBox(palazzo,  0,  3.35, 0,  4.45,0.14, 1.52, mG);   // cornicione
+  addBox(palazzo,  0, -0.13, 0,  4.65,0.13, 1.58, mG);   // zoccolo
+
+  // ─── Risaliti laterali ───
+  addBox(palazzo, -2.25, 0, 0.05, 1.05, 2.65, 1.50, mGd);
+  addBox(palazzo,  2.25, 0, 0.05, 1.05, 2.65, 1.50, mGd);
+
+  // ─── Finestre piano terra ───
+  for (let i = -1; i <= 1; i++) addBox(palazzo, i*1.15, 0.18, 0.72, 0.52, 0.62, 0.02, mGd);
+
+  // ─── Finestre piano nobile (portali alti) ───
+  for (let i = -1; i <= 1; i++) addBox(palazzo, i*1.15, 1.40, 0.72, 0.52, 1.05, 0.02, mG);
+
+  // ─── Oculi attico ───
+  for (let i = -1; i <= 1; i++) addBox(palazzo, i*1.1,  2.85, 0.68, 0.38, 0.32, 0.02, mIv);
+
+  // ─── Finestre ali laterali ───
+  [-2.25, 2.25].forEach(wx => {
+    addBox(palazzo, wx, 0.28, 0.76, 0.36, 0.48, 0.02, mIv);
+    addBox(palazzo, wx, 1.45, 0.76, 0.36, 0.70, 0.02, mIv);
+  });
+
+  // ─── Colonne centrali (pilastri) ───
+  [-0.55, 0.55].forEach(cx => {
+    addBox(palazzo, cx, 0, -0.05, 0.08, 2.7, 0.08, mGd);
+  });
+
+  // ─── Grid del suolo ───
+  const gridGeo = new THREE.BufferGeometry();
+  const gLines = [];
+  for (let i = -4; i <= 4; i++) {
+    gLines.push(-4, 0, i,  4, 0, i);
+    gLines.push(i, 0, -4,  i, 0,  4);
+  }
+  gridGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(gLines), 3));
+  const gridMat = new THREE.LineBasicMaterial({ color: 0x2a2010, transparent: true, opacity: 0.4 });
+  const grid = new THREE.LineSegments(gridGeo, gridMat);
+  grid.position.y = -0.01;
+  scene.add(grid);
+
+  // ─── Point cloud (scanned data) ───
+  const PT = 900;
+  const ptPos = new Float32Array(PT * 3);
+  for (let i = 0; i < PT; i++) {
+    ptPos[i*3]   = (Math.random() - 0.5) * 5.8;
+    ptPos[i*3+1] = Math.random() * 4.0;
+    ptPos[i*3+2] = (Math.random() - 0.5) * 2.8;
+  }
+  const ptGeo = new THREE.BufferGeometry();
+  ptGeo.setAttribute('position', new THREE.BufferAttribute(ptPos, 3));
+  const ptMat = new THREE.PointsMaterial({
+    color: IVORY, size: 0.042, transparent: true, opacity: 0.30,
+    sizeAttenuation: true, clippingPlanes: [clipPlane]
+  });
+  scene.add(new THREE.Points(ptGeo, ptMat));
+
+  // ─── Scan line + glow ───
+  const scanLineMesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(7.0, 0.014),
+    new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.95, depthWrite: false })
+  );
+  scanLineMesh.rotation.x = -Math.PI / 2;
+  scene.add(scanLineMesh);
+
+  const scanGlow = new THREE.Mesh(
+    new THREE.PlaneGeometry(7.0, 0.26),
+    new THREE.MeshBasicMaterial({ color: GOLD, transparent: true, opacity: 0.14, depthWrite: false })
+  );
+  scanGlow.rotation.x = -Math.PI / 2;
+  scene.add(scanGlow);
+
+  // Horizontal trace lines at scan Y (left/right spreading rays)
+  const rayMat = new THREE.LineBasicMaterial({ color: GOLD, transparent: true, opacity: 0.22 });
+  const rayGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(-6, 0, 0), new THREE.Vector3(6, 0, 0)
+  ]);
+  const rayLine = new THREE.Line(rayGeo, rayMat);
+  scene.add(rayLine);
+
+  // ─── Resize ───
+  function resize() {
+    const w = canvas.offsetWidth, h = canvas.offsetHeight;
+    if (!w || !h) return;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  const ro = new ResizeObserver(resize);
+  ro.observe(canvas);
+  resize();
+
+  // ─── Animation state ───
+  const SCAN_DUR = 3.4;
+  const HOLD_DUR = 2.2;
+  const ROT_DUR  = 5.5;
+  let phase = 'scan', phaseT = 0, scanY = SCAN_MIN;
+  let lastT = performance.now() / 1000;
+
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : 1 - Math.pow(-2*t+2, 2)/2; }
+
+  function tick() {
+    requestAnimationFrame(tick);
+    const now = performance.now() / 1000;
+    const dt  = Math.min(now - lastT, 0.05);
+    lastT = now;
+    phaseT += dt;
+
+    if (phase === 'scan') {
+      const p  = Math.min(phaseT / SCAN_DUR, 1);
+      scanY = SCAN_MIN + (SCAN_MAX - SCAN_MIN) * easeInOut(p);
+      clipPlane.constant = scanY;
+      scanLineMesh.position.y = scanY;
+      scanGlow.position.y     = scanY;
+      rayLine.position.y      = scanY;
+      // fade out scan line near the end
+      const fadeOp = p > 0.88 ? 1 - (p - 0.88) / 0.12 : 1;
+      scanLineMesh.material.opacity = 0.95 * fadeOp;
+      scanGlow.material.opacity     = 0.14 * fadeOp;
+      rayMat.opacity                = 0.22 * fadeOp;
+      if (p >= 1) {
+        phase = 'hold'; phaseT = 0;
+        scanLineMesh.visible = scanGlow.visible = rayLine.visible = false;
+        clipPlane.constant = SCAN_MAX + 1;
+      }
+
+    } else if (phase === 'hold') {
+      if (phaseT >= HOLD_DUR) { phase = 'rotate'; phaseT = 0; }
+
+    } else if (phase === 'rotate') {
+      palazzo.rotation.y = Math.sin(phaseT * 0.22) * 0.38;
+      if (phaseT >= ROT_DUR) {
+        phase = 'scan'; phaseT = 0;
+        scanY = SCAN_MIN;
+        clipPlane.constant = SCAN_MIN;
+        palazzo.rotation.y = 0;
+        scanLineMesh.visible = scanGlow.visible = rayLine.visible = true;
+        scanLineMesh.material.opacity = 0.95;
+        scanGlow.material.opacity = 0.14;
+        rayMat.opacity = 0.22;
+        scanLineMesh.position.y = SCAN_MIN;
+        scanGlow.position.y = SCAN_MIN;
+        rayLine.position.y  = SCAN_MIN;
+      }
+    }
+
+    renderer.render(scene, camera);
+  }
+
+  tick();
+})();
 </script>
 
 </body>
