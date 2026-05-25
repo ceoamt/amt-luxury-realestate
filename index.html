@@ -1125,8 +1125,6 @@ body {
   70%  { transform: scale(2.4); opacity: 0; }
   100% { transform: scale(2.4); opacity: 0; }
 }
-.mvs-tab.mvs-active .tab-ping { display: none; }
-.tab-ping.dismissed     { display: none; }
 
 /* ─── Tab hint animation — fires once when mockup enters view ─── */
 @keyframes tabHint {
@@ -2416,6 +2414,7 @@ body {
       <button class="mvs-tab mvs-active" onclick="switchMockView('mock-panel-dash', this)">
         <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="3.5" cy="5" r="1" stroke="currentColor" stroke-width="0.8"/><path d="M1 9l2.5-2.5 2 1.5 2-2.5 4 4" stroke="currentColor" stroke-width="0.8"/></svg>
         3D Tour
+        <span class="tab-ping"></span>
       </button>
       <button class="mvs-tab" onclick="switchMockView('mock-panel-twin', this)">
         <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
@@ -3508,8 +3507,6 @@ body {
   function switchMockView(targetId, btn) {
     const idx = MVS.panels.indexOf(targetId);
     if (idx === -1) return;
-    // rimuovi tutti i ping al primo click
-    document.querySelectorAll('.tab-ping').forEach(p => p.classList.add('dismissed'));
     MVS.go(idx);
   }
 
