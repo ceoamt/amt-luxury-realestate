@@ -1009,6 +1009,7 @@ body {
   background: #f0ede8;
 }
 .mvs-tab {
+  position: relative;
   display: flex; align-items: center; gap: 6px;
   padding: 9px 18px;
   font-family: var(--f-mono);
@@ -1020,15 +1021,49 @@ body {
   border: none;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: color 0.2s;
   margin-bottom: -1px;
+  overflow: hidden;
 }
 .mvs-tab svg { width: 11px; height: 11px; opacity: 0.6; }
-.mvs-tab.mvs-active {
-  color: var(--ink);
-  border-bottom-color: var(--gold);
-}
+.mvs-tab.mvs-active { color: var(--ink); border-bottom-color: transparent; }
 .mvs-tab.mvs-active svg { opacity: 1; }
+
+/* Progress bar that fills under the active tab */
+.mvs-progress {
+  position: absolute;
+  bottom: -1px; left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--gold);
+  pointer-events: none;
+}
+.mvs-progress.running {
+  transition: width 4.4s linear;
+  width: 100%;
+}
+
+/* Live demo badge */
+.mvs-live-badge {
+  margin-left: auto;
+  display: flex; align-items: center; gap: 5px;
+  padding: 0 14px;
+  font-family: var(--f-mono);
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(184,146,42,0.6);
+}
+.mvs-live-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: livePulse 1.6s ease-in-out infinite;
+}
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.65); }
+}
 
 /* ─── DIGITAL TWIN PANEL ─── */
 .mock-twin-wrapper {
@@ -2266,11 +2301,14 @@ body {
       <button class="mvs-tab mvs-active" onclick="switchMockView('mock-panel-dash', this)">
         <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="3.5" cy="5" r="1" stroke="currentColor" stroke-width="0.8"/><path d="M1 9l2.5-2.5 2 1.5 2-2.5 4 4" stroke="currentColor" stroke-width="0.8"/></svg>
         Tour fotografico
+        <span class="mvs-progress"></span>
       </button>
       <button class="mvs-tab" onclick="switchMockView('mock-panel-twin', this)">
         <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
         Digital Twin
+        <span class="mvs-progress"></span>
       </button>
+      <span class="mvs-live-badge"><span class="mvs-live-dot"></span>Live demo</span>
     </div>
 
     <!-- Panel 1: Dashboard standard -->
@@ -3203,16 +3241,121 @@ body {
      SCROLL REVEAL SCRIPT
 ═══════════════════════════════════ -->
 <script>
-  function switchMockView(targetId, btn) {
-    ['mock-panel-dash','mock-panel-twin'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = id === targetId ? '' : 'none';
-    });
-    btn.closest('.mock-view-switcher').querySelectorAll('.mvs-tab').forEach(t => t.classList.remove('mvs-active'));
-    btn.classList.add('mvs-active');
-    if (targetId === 'mock-panel-twin') {
-      requestAnimationFrame(() => window._initTwinViewer?.());
+  /* ─── Mock panel auto-switch with fade ─── */
+  const MVS = {
+    panels : ['mock-panel-dash', 'mock-panel-twin'],
+    current: 0,
+    timer  : null,
+    paused : false,
+    DELAY  : 4400,   // ms each panel stays visible
+    FADE   : 300,    // ms cross-fade
+    started: false,
+
+    tabFor(panelId) {
+      return document.querySelector(`.mvs-tab[onclick*="${panelId}"]`);
+    },
+
+    startBar(panelId) {
+      const tab = this.tabFor(panelId);
+      if (!tab) return;
+      const bar = tab.querySelector('.mvs-progress');
+      if (!bar) return;
+      bar.style.transition = 'none';
+      bar.classList.remove('running');
+      bar.style.width = '0%';
+      void bar.offsetWidth;
+      bar.style.transition = '';
+      bar.classList.add('running');
+    },
+
+    stopBars() {
+      document.querySelectorAll('.mvs-progress').forEach(b => {
+        b.style.transition = 'none';
+        b.classList.remove('running');
+        b.style.width = '0%';
+      });
+    },
+
+    go(toIdx, isUser) {
+      if (isUser) {
+        this.paused = true;
+        clearTimeout(this.timer);
+        setTimeout(() => { this.paused = false; this.schedule(); }, 14000);
+      }
+      const fromId = this.panels[this.current];
+      const toId   = this.panels[toIdx];
+      if (fromId === toId) return;
+
+      const fromEl = document.getElementById(fromId);
+      const toEl   = document.getElementById(toId);
+
+      // Update tab active state
+      document.querySelectorAll('.mvs-tab').forEach(t => t.classList.remove('mvs-active'));
+      const toTab = this.tabFor(toId);
+      if (toTab) toTab.classList.add('mvs-active');
+      this.stopBars();
+
+      // Fade out current
+      fromEl.style.transition = `opacity ${this.FADE}ms ease`;
+      fromEl.style.opacity = '0';
+
+      setTimeout(() => {
+        fromEl.style.display = 'none';
+        fromEl.style.opacity = '';
+        fromEl.style.transition = '';
+
+        toEl.style.opacity = '0';
+        toEl.style.display = '';
+        toEl.style.transition = `opacity ${this.FADE}ms ease`;
+
+        if (toId === 'mock-panel-twin') {
+          requestAnimationFrame(() => window._initTwinViewer?.());
+        }
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          toEl.style.opacity = '1';
+          setTimeout(() => {
+            toEl.style.opacity = '';
+            toEl.style.transition = '';
+            if (!this.paused || isUser) this.startBar(toId);
+          }, this.FADE + 40);
+        }));
+
+        this.current = toIdx;
+      }, this.FADE);
+    },
+
+    schedule() {
+      if (this.paused) return;
+      this.timer = setTimeout(() => {
+        if (this.paused) return;
+        const next = (this.current + 1) % this.panels.length;
+        this.go(next, false);
+        setTimeout(() => { if (!this.paused) this.schedule(); }, this.FADE * 2 + 100);
+      }, this.DELAY);
+    },
+
+    start() {
+      if (this.started) return;
+      this.started = true;
+      this.startBar(this.panels[this.current]);
+      this.schedule();
     }
+  };
+
+  // Boot when mockup scrolls into view
+  const _mockupEl = document.querySelector('.dashboard-mockup');
+  if (_mockupEl) {
+    const _mvIo = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { _mvIo.disconnect(); setTimeout(() => MVS.start(), 900); }
+    }, { threshold: 0.25 });
+    _mvIo.observe(_mockupEl);
+  }
+
+  function switchMockView(targetId, btn) {
+    const idx = MVS.panels.indexOf(targetId);
+    if (idx === -1) return;
+    MVS.go(idx, true);
   }
 
   const revealEls = document.querySelectorAll('.reveal');
