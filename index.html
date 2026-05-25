@@ -1149,6 +1149,9 @@ body {
   animation: tabHint 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.44s 1 both;
 }
 
+/* Views mobile bar — hidden by default (desktop), shown in mobile media query */
+.mock-views-mobile-bar { display: none; }
+
 /* Live demo badge */
 .mvs-live-badge {
   margin-left: auto;
@@ -2181,6 +2184,44 @@ body {
   .tiers { grid-template-columns: 1fr; }
   .tier-card { padding: 40px 20px 48px; }
 
+  /* ── VIEWS MOBILE BAR ── */
+  .mock-views-mobile-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 0 20px 28px;
+  }
+  .mvmb-label {
+    font-family: var(--f-mono);
+    font-size: 7px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(14,13,11,0.35);
+    width: 100%;
+    margin-bottom: 2px;
+  }
+  .mvmb-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--f-mono);
+    font-size: 8px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(14,13,11,0.55);
+    background: rgba(14,13,11,0.04);
+    border: 1px solid rgba(14,13,11,0.1);
+    border-radius: 3px;
+    padding: 6px 10px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .mvmb-btn:active { background: rgba(184,146,42,0.1); color: var(--gold); border-color: var(--gold); }
+  .mvmb-btn.mvmb-active { background: rgba(184,146,42,0.12); color: var(--gold); border-color: rgba(184,146,42,0.45); font-weight: 600; }
+  .mvmb-btn svg { width: 10px; height: 10px; opacity: 0.6; }
+  .mvmb-btn.mvmb-active svg { opacity: 1; }
+
   /* ── DASHBOARD MOCKUP ── */
   .dashboard-mockup { margin: 0 8px; border-radius: 4px; }
   .mockup-url { display: none; }
@@ -2572,6 +2613,27 @@ body {
       </p>
     </div>
     <div class="section-count">02 / 04</div>
+  </div>
+
+  <!-- Mobile views bar (hidden on desktop, shown on mobile) -->
+  <div class="mock-views-mobile-bar">
+    <div class="mvmb-label">Viste disponibili</div>
+    <button class="mvmb-btn mvmb-active" onclick="switchMockView('mock-panel-dash', this)">
+      <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="3.5" cy="5" r="1" stroke="currentColor" stroke-width="0.8"/><path d="M1 9l2.5-2.5 2 1.5 2-2.5 4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+      3D Tour
+    </button>
+    <button class="mvmb-btn" onclick="switchMockView('mock-panel-twin', this)">
+      <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
+      Digital Twin
+    </button>
+    <button class="mvmb-btn" onclick="switchMockView('mock-panel-splat', this)">
+      <svg viewBox="0 0 12 12" fill="none"><circle cx="2.5" cy="2.5" r="0.9" fill="currentColor" opacity="0.6"/><circle cx="6" cy="1.8" r="0.9" fill="currentColor"/><circle cx="9.5" cy="3.5" r="0.9" fill="currentColor" opacity="0.7"/><circle cx="4.5" cy="6" r="1.1" fill="currentColor"/><circle cx="8.5" cy="6" r="0.9" fill="currentColor" opacity="0.8"/><circle cx="2.5" cy="9.5" r="0.9" fill="currentColor" opacity="0.5"/><circle cx="7" cy="9.5" r="0.9" fill="currentColor" opacity="0.7"/></svg>
+      Gaussian Splat
+    </button>
+    <button class="mvmb-btn" onclick="switchMockView('mock-panel-video', this)">
+      <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2.5" width="7.5" height="7" rx="1" stroke="currentColor" stroke-width="1"/><path d="M8.5 5.5l3-1.5v4l-3-1.5" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+      Video 3D+ AI
+    </button>
   </div>
 
   <!-- Mockup UI -->
@@ -3671,8 +3733,11 @@ body {
       const toEl   = document.getElementById(toId);
 
       document.querySelectorAll('.mvs-tab').forEach(t => t.classList.remove('mvs-active'));
+      document.querySelectorAll('.mvmb-btn').forEach(b => b.classList.remove('mvmb-active'));
       const toTab = this.tabFor(toId);
       if (toTab) toTab.classList.add('mvs-active');
+      const toMobileBtn = document.querySelector(`.mvmb-btn[onclick*="${toId}"]`);
+      if (toMobileBtn) toMobileBtn.classList.add('mvmb-active');
 
       fromEl.style.transition = `opacity ${this.FADE}ms ease`;
       fromEl.style.opacity = '0';
