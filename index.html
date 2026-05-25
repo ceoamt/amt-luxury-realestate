@@ -748,7 +748,7 @@ body {
 /* 3D viewer placeholder */
 .mock-3d {
   grid-row: span 2;
-  background: linear-gradient(135deg, #ece8e1 0%, #ddd8d0 100%);
+  background: #cec4b0;
   border: 1px solid rgba(184,146,42,0.2);
   border-radius: 3px;
   display: flex;
@@ -756,18 +756,13 @@ body {
   justify-content: center;
   flex-direction: column;
   gap: 12px;
-  min-height: 260px;
+  min-height: 400px;
   position: relative;
   overflow: hidden;
 }
 
 .mock-3d-bg {
-  position: absolute; inset: 0;
-  background-image:
-    radial-gradient(circle at 50% 50%, rgba(184,146,42,0.06) 0%, transparent 60%),
-    linear-gradient(45deg, rgba(184,146,42,0.03) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(184,146,42,0.03) 25%, transparent 25%);
-  background-size: 100% 100%, 20px 20px, 20px 20px;
+  display: none;
 }
 
 /* Wireframe mesh SVG */
@@ -775,7 +770,7 @@ body {
   position: absolute;
   width: 100%; height: 100%;
   top: 0; left: 0;
-  opacity: 0.15;
+  opacity: 1;
 }
 
 .mock-3d-label {
@@ -2011,40 +2006,161 @@ body {
           <!-- 3D Viewer -->
           <div class="mock-3d">
             <div class="mock-3d-bg"></div>
-            <!-- Wireframe SVG mesh -->
-            <svg class="mesh-svg" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-              <!-- Rough building wireframe perspective -->
-              <g stroke="#b8922a" fill="none" stroke-width="0.8">
-                <!-- Base rectangle -->
-                <polygon points="60,150 240,150 270,120 90,120" />
-                <!-- Front face -->
-                <polygon points="60,150 90,120 90,60 60,90" />
-                <!-- Top face -->
-                <polygon points="60,90 90,60 240,60 210,90" />
-                <!-- Side -->
-                <polygon points="210,90 240,60 270,90 240,120" />
-                <!-- Back face -->
-                <polygon points="240,120 270,90 270,60 240,60" />
-                <!-- Windows front -->
-                <rect x="65" y="100" width="12" height="14" />
-                <rect x="65" y="75" width="12" height="12" />
-                <!-- Windows perspective side -->
-                <line x1="100" y1="80" x2="112" y2="80" />
-                <line x1="100" y1="94" x2="112" y2="94" />
-                <line x1="100" y1="80" x2="100" y2="94" />
-                <line x1="112" y1="80" x2="112" y2="94" />
-                <!-- Ground lines -->
-                <line x1="30" y1="150" x2="280" y2="150" opacity="0.3"/>
-                <line x1="30" y1="155" x2="280" y2="155" opacity="0.1"/>
-                <!-- Depth grid lines -->
-                <line x1="120" y1="120" x2="150" y2="60" opacity="0.25" />
-                <line x1="150" y1="120" x2="180" y2="60" opacity="0.25" />
-                <line x1="180" y1="120" x2="210" y2="60" opacity="0.25" />
-                <line x1="90" y1="80" x2="240" y2="80" opacity="0.15" />
-                <line x1="90" y1="100" x2="240" y2="100" opacity="0.15" />
+            <!-- Frescoed room interior SVG -->
+            <svg class="mesh-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="dg-back" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e0d4bc"/><stop offset="100%" stop-color="#cdc0a8"/>
+                </linearGradient>
+                <linearGradient id="dg-left" x1="1" y1="0" x2="0" y2="0">
+                  <stop offset="0%" stop-color="#d0c4ac"/><stop offset="100%" stop-color="#afa38a"/>
+                </linearGradient>
+                <linearGradient id="dg-right" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#d0c4ac"/><stop offset="100%" stop-color="#afa38a"/>
+                </linearGradient>
+                <linearGradient id="dg-floor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#9a8c74"/><stop offset="100%" stop-color="#7a6e58"/>
+                </linearGradient>
+                <linearGradient id="dg-ceil" x1="0" y1="1" x2="0" y2="0">
+                  <stop offset="0%" stop-color="#ddd5be"/><stop offset="100%" stop-color="#eee6d0"/>
+                </linearGradient>
+                <linearGradient id="dg-sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#4e6e98"/>
+                  <stop offset="30%" stop-color="#7898b8"/>
+                  <stop offset="65%" stop-color="#b0c4cc"/>
+                  <stop offset="100%" stop-color="#c4be98"/>
+                </linearGradient>
+                <linearGradient id="dg-side" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7a98b0"/><stop offset="55%" stop-color="#a8b09a"/><stop offset="100%" stop-color="#8a7868"/>
+                </linearGradient>
+                <clipPath id="cp-arch">
+                  <path d="M130 195 L130 100 A70 70 0 0 1 270 100 L270 195 Z"/>
+                </clipPath>
+                <clipPath id="cp-lp">
+                  <polygon points="10,80 68,62 68,178 10,200"/>
+                </clipPath>
+                <clipPath id="cp-rp">
+                  <polygon points="390,80 332,62 332,178 390,200"/>
+                </clipPath>
+              </defs>
+
+              <!-- FLOOR -->
+              <polygon points="0,300 400,300 315,208 85,208" fill="url(#dg-floor)"/>
+              <line x1="0" y1="300" x2="85" y2="208" stroke="rgba(0,0,0,0.12)" stroke-width="0.6"/>
+              <line x1="100" y1="300" x2="143" y2="208" stroke="rgba(0,0,0,0.1)" stroke-width="0.6"/>
+              <line x1="200" y1="300" x2="200" y2="208" stroke="rgba(0,0,0,0.1)" stroke-width="0.6"/>
+              <line x1="300" y1="300" x2="257" y2="208" stroke="rgba(0,0,0,0.1)" stroke-width="0.6"/>
+              <line x1="400" y1="300" x2="315" y2="208" stroke="rgba(0,0,0,0.12)" stroke-width="0.6"/>
+              <line x1="57" y1="239" x2="343" y2="239" stroke="rgba(0,0,0,0.08)" stroke-width="0.6"/>
+              <line x1="28" y1="270" x2="372" y2="270" stroke="rgba(0,0,0,0.07)" stroke-width="0.6"/>
+              <!-- Floor marble alternating tiles hint -->
+              <polygon points="85,208 143,208 100,300 0,300" fill="rgba(255,255,255,0.04)"/>
+              <polygon points="200,208 257,208 300,300 200,300" fill="rgba(255,255,255,0.04)"/>
+
+              <!-- LEFT WALL -->
+              <polygon points="0,0 85,28 85,208 0,300" fill="url(#dg-left)"/>
+              <g clip-path="url(#cp-lp)">
+                <polygon points="10,80 68,62 68,178 10,200" fill="url(#dg-side)"/>
+                <polygon points="10,145 30,128 50,136 68,124 68,178 10,178" fill="#688058" opacity="0.55"/>
+                <polygon points="10,162 68,155 68,178 10,178" fill="#506840" opacity="0.65"/>
+                <ellipse cx="38" cy="108" rx="18" ry="13" fill="rgba(255,248,200,0.18)"/>
               </g>
+              <polygon points="10,80 68,62 68,178 10,200" fill="none" stroke="#b8922a" stroke-width="1.4" opacity="0.7"/>
+              <line x1="0" y1="0" x2="85" y2="28" stroke="rgba(14,13,11,0.15)" stroke-width="1.2"/>
+              <line x1="0" y1="300" x2="85" y2="208" stroke="rgba(14,13,11,0.15)" stroke-width="1.2"/>
+
+              <!-- RIGHT WALL -->
+              <polygon points="400,0 315,28 315,208 400,300" fill="url(#dg-right)"/>
+              <g clip-path="url(#cp-rp)">
+                <polygon points="390,80 332,62 332,178 390,200" fill="url(#dg-side)"/>
+                <polygon points="390,145 370,128 350,136 332,124 332,178 390,178" fill="#688058" opacity="0.55"/>
+                <polygon points="390,162 332,155 332,178 390,178" fill="#506840" opacity="0.65"/>
+                <ellipse cx="362" cy="108" rx="18" ry="13" fill="rgba(255,248,200,0.18)"/>
+              </g>
+              <polygon points="390,80 332,62 332,178 390,200" fill="none" stroke="#b8922a" stroke-width="1.4" opacity="0.7"/>
+              <line x1="400" y1="0" x2="315" y2="28" stroke="rgba(14,13,11,0.15)" stroke-width="1.2"/>
+              <line x1="400" y1="300" x2="315" y2="208" stroke="rgba(14,13,11,0.15)" stroke-width="1.2"/>
+
+              <!-- CEILING -->
+              <polygon points="0,0 400,0 315,28 85,28" fill="url(#dg-ceil)"/>
+              <line x1="0" y1="0" x2="85" y2="28" stroke="rgba(184,146,42,0.18)" stroke-width="1"/>
+              <line x1="400" y1="0" x2="315" y2="28" stroke="rgba(184,146,42,0.18)" stroke-width="1"/>
+              <line x1="133" y1="0" x2="152" y2="28" stroke="rgba(184,146,42,0.1)" stroke-width="0.7"/>
+              <line x1="200" y1="0" x2="200" y2="28" stroke="rgba(184,146,42,0.1)" stroke-width="0.7"/>
+              <line x1="267" y1="0" x2="248" y2="28" stroke="rgba(184,146,42,0.1)" stroke-width="0.7"/>
+              <line x1="18" y1="14" x2="382" y2="14" stroke="rgba(184,146,42,0.1)" stroke-width="0.7"/>
+              <line x1="0" y1="0" x2="400" y2="0" stroke="rgba(14,13,11,0.12)" stroke-width="1"/>
+
+              <!-- BACK WALL base -->
+              <rect x="85" y="28" width="230" height="180" fill="url(#dg-back)"/>
+              <!-- Frieze top band -->
+              <rect x="85" y="28" width="230" height="11" fill="#c8b89a" opacity="0.55"/>
+              <line x1="85" y1="39" x2="315" y2="39" stroke="#b8922a" stroke-width="0.7" opacity="0.45"/>
+              <!-- Wainscoting bottom band -->
+              <rect x="85" y="195" width="230" height="13" fill="#c0b092" opacity="0.55"/>
+              <line x1="85" y1="195" x2="315" y2="195" stroke="#b8922a" stroke-width="0.7" opacity="0.45"/>
+              <!-- Left pilaster -->
+              <rect x="85" y="28" width="14" height="180" fill="#c4b898" opacity="0.55"/>
+              <line x1="99" y1="28" x2="99" y2="208" stroke="#b8922a" stroke-width="0.6" opacity="0.5"/>
+              <!-- Right pilaster -->
+              <rect x="301" y="28" width="14" height="180" fill="#c4b898" opacity="0.55"/>
+              <line x1="301" y1="28" x2="301" y2="208" stroke="#b8922a" stroke-width="0.6" opacity="0.5"/>
+
+              <!-- MAIN ARCH FRESCO — outer ornamental frame -->
+              <path d="M122 196 L122 95 A78 78 0 0 1 278 95 L278 196 Z" fill="none" stroke="#b8922a" stroke-width="1.2" opacity="0.5"/>
+              <path d="M127 196 L127 98 A73 73 0 0 1 273 98 L273 196 Z" fill="none" stroke="#b8922a" stroke-width="2.8" opacity="0.9"/>
+
+              <!-- Fresco scene inside arch -->
+              <g clip-path="url(#cp-arch)">
+                <!-- Sky -->
+                <rect x="130" y="28" width="140" height="195" fill="url(#dg-sky)"/>
+                <!-- Distant hazy mountains -->
+                <polygon points="130,148 152,116 170,126 192,102 200,108 210,96 228,108 248,118 270,110 270,148" fill="#9aaab8" opacity="0.42"/>
+                <polygon points="130,158 158,138 180,146 200,132 222,142 252,136 270,146 270,175 130,175" fill="#b8b090" opacity="0.5"/>
+                <!-- Atmospheric glow center -->
+                <ellipse cx="200" cy="115" rx="44" ry="26" fill="rgba(255,252,215,0.2)"/>
+                <!-- Classical temple columns -->
+                <rect x="180" y="116" width="5" height="44" fill="#d0c8ae" opacity="0.8"/>
+                <rect x="189" y="112" width="5" height="48" fill="#d8d0b8" opacity="0.8"/>
+                <rect x="206" y="112" width="5" height="48" fill="#d8d0b8" opacity="0.8"/>
+                <rect x="215" y="116" width="5" height="44" fill="#d0c8ae" opacity="0.8"/>
+                <!-- Pediment -->
+                <polygon points="175,116 225,116 225,111 200,100 175,111" fill="#c8c0a5" opacity="0.75"/>
+                <rect x="175" y="113" width="50" height="5" fill="#c0b89a" opacity="0.75"/>
+                <!-- Cypress left -->
+                <ellipse cx="148" cy="140" rx="7" ry="34" fill="#344228" opacity="0.82"/>
+                <ellipse cx="159" cy="145" rx="5" ry="26" fill="#405030" opacity="0.7"/>
+                <!-- Cypress right -->
+                <ellipse cx="252" cy="138" rx="7" ry="36" fill="#344228" opacity="0.82"/>
+                <ellipse cx="241" cy="143" rx="5" ry="28" fill="#405030" opacity="0.7"/>
+                <!-- Ground -->
+                <polygon points="130,170 270,170 270,196 130,196" fill="#6e8448" opacity="0.62"/>
+                <polygon points="130,182 270,182 270,196 130,196" fill="#587038" opacity="0.72"/>
+                <!-- Gravel path center -->
+                <polygon points="191,196 209,196 216,174 184,174" fill="#c0b088" opacity="0.42"/>
+                <!-- Wildflowers -->
+                <circle cx="143" cy="188" r="2" fill="#d4a838" opacity="0.55"/>
+                <circle cx="163" cy="191" r="1.5" fill="#c8902a" opacity="0.5"/>
+                <circle cx="250" cy="187" r="2" fill="#d4a838" opacity="0.55"/>
+                <circle cx="235" cy="190" r="1.5" fill="#c8902a" opacity="0.5"/>
+              </g>
+
+              <!-- Arch frame drawn on top -->
+              <path d="M127 196 L127 98 A73 73 0 0 1 273 98 L273 196 Z" fill="none" stroke="#b8922a" stroke-width="2.8" opacity="0.9"/>
+              <!-- Keystone -->
+              <ellipse cx="200" cy="30" rx="7" ry="5" fill="#b8922a" opacity="0.65"/>
+              <path d="M196 33 L200 26 L204 33 Z" fill="#b8922a" opacity="0.55"/>
+              <!-- Corner rosettes -->
+              <circle cx="127" cy="196" r="3.5" fill="#b8922a" opacity="0.65"/>
+              <circle cx="273" cy="196" r="3.5" fill="#b8922a" opacity="0.65"/>
+
+              <!-- Structural lines -->
+              <line x1="85" y1="28" x2="85" y2="208" stroke="rgba(14,13,11,0.22)" stroke-width="1.2"/>
+              <line x1="315" y1="28" x2="315" y2="208" stroke="rgba(14,13,11,0.22)" stroke-width="1.2"/>
+              <line x1="85" y1="208" x2="315" y2="208" stroke="rgba(14,13,11,0.18)" stroke-width="1"/>
+              <line x1="85" y1="28" x2="315" y2="28" stroke="rgba(14,13,11,0.18)" stroke-width="1"/>
             </svg>
-            <div class="mock-3d-label">Modello 3D Fotogrammetrico<br>Ruota · Esplora · Misura</div>
+            <div class="mock-3d-label">Salone degli Affreschi — Villa Malcontenta<br>Ruota · Esplora · Misura</div>
             <div class="mock-3d-btn">Avvia Walkthrough →</div>
           </div>
 
