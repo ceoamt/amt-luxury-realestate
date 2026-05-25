@@ -1,0 +1,2209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMTitalia — Proposta Dashboard Immobiliare di Pregio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════════════════ */
+:root {
+  --ink:        #0e0d0b;
+  --ink-soft:   #2a2720;
+  --stone:      #f5f2ee;
+  --stone-mid:  #e8e3db;
+  --stone-dark: #cfc8bc;
+  --gold:       #b8922a;
+  --gold-light: #d4ac52;
+  --gold-pale:  #f0e3c0;
+  --ivory:      #faf8f4;
+  --white:      #ffffff;
+  --slate:      #4a4540;
+  --ghost:      rgba(14,13,11,0.06);
+
+  --f-serif:  'Cormorant Garamond', Georgia, serif;
+  --f-sans:   'Outfit', sans-serif;
+  --f-mono:   'DM Mono', monospace;
+
+  --ease-silk: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-gold: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ══════ RESET & BASE ══════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--stone);
+  color: var(--ink);
+  font-family: var(--f-sans);
+  font-weight: 300;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  background: var(--ink);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,146,42,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 20% 80%, rgba(184,146,42,0.06) 0%, transparent 50%),
+    linear-gradient(160deg, #12100d 0%, #0e0d0b 50%, #1a1710 100%);
+}
+
+/* Architectural grid overlay */
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(184,146,42,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,146,42,0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 80% 70% at 60% 50%, black 0%, transparent 70%);
+}
+
+/* Diagonal accent line */
+.hero-line {
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(184,146,42,0.4) 40%, rgba(184,146,42,0.1) 100%);
+  left: 62%;
+  transform: rotate(8deg) translateX(-50%);
+  transform-origin: top center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 72px 80px;
+  max-width: 1200px;
+}
+
+.hero-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-silk) 0.3s forwards;
+}
+
+.hero-title {
+  font-family: var(--f-serif);
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 1.0;
+  color: var(--ivory);
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 1.2s var(--ease-silk) 0.5s forwards;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.hero-subtitle {
+  font-family: var(--f-sans);
+  font-size: 15px;
+  font-weight: 200;
+  color: rgba(250,248,244,0.5);
+  letter-spacing: 0.05em;
+  max-width: 520px;
+  margin-bottom: 64px;
+  opacity: 0;
+  animation: fadeUp 1.2s var(--ease-silk) 0.7s forwards;
+}
+
+.hero-meta {
+  display: flex;
+  gap: 48px;
+  align-items: flex-end;
+  opacity: 0;
+  animation: fadeUp 1s var(--ease-silk) 1s forwards;
+}
+
+.hero-from {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-from-label {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: rgba(250,248,244,0.3);
+  text-transform: uppercase;
+}
+
+.hero-from-name {
+  font-family: var(--f-sans);
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(250,248,244,0.8);
+}
+
+.hero-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(184,146,42,0.3);
+}
+
+/* Scroll indicator */
+.scroll-cue {
+  position: absolute;
+  right: 72px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeIn 1s 1.5s forwards;
+}
+
+.scroll-cue-line {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, rgba(184,146,42,0.5));
+  animation: scrollLine 2s ease-in-out infinite;
+}
+
+.scroll-cue-text {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(184,146,42,0.5);
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+
+/* Top bar */
+.hero-topbar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 28px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.logo-amt {
+  font-family: var(--f-mono);
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  color: var(--ivory);
+  opacity: 0.9;
+}
+.logo-amt span { color: var(--gold); }
+
+.hero-date {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(250,248,244,0.35);
+}
+
+/* ══════════════════════════════════════════════════
+   MANIFESTO (intro section)
+══════════════════════════════════════════════════ */
+.manifesto {
+  background: var(--ivory);
+  padding: 120px 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.manifesto-left {}
+
+.manifesto-kicker {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.manifesto-heading {
+  font-family: var(--f-serif);
+  font-size: clamp(38px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+
+.manifesto-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.manifesto-body {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.8;
+  max-width: 420px;
+}
+
+.manifesto-right {
+  padding-top: 16px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--stone-dark);
+  border: 1px solid var(--stone-dark);
+  margin-bottom: 40px;
+}
+
+.stat-cell {
+  background: var(--ivory);
+  padding: 32px 28px;
+}
+
+.stat-num {
+  font-family: var(--f-serif);
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-num span {
+  color: var(--gold);
+  font-size: 28px;
+}
+
+.stat-label {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--slate);
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.manifesto-note {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.7;
+  padding-left: 20px;
+  border-left: 2px solid var(--gold-pale);
+  font-style: italic;
+}
+
+/* ══════════════════════════════════════════════════
+   ACQUISIZIONE — 2 TIER
+══════════════════════════════════════════════════ */
+.acquisition {
+  background: var(--stone);
+  padding: 0 0 120px;
+}
+
+.section-header {
+  padding: 100px 72px 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--stone-dark);
+  margin-bottom: 0;
+}
+
+.section-kicker {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: var(--f-serif);
+  font-size: clamp(34px, 3.5vw, 50px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-count {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--slate);
+  opacity: 0.5;
+}
+
+.tiers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--stone-dark);
+  margin: 0;
+}
+
+.tier-card {
+  background: var(--stone);
+  padding: 64px 72px 72px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tier-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease-silk);
+}
+
+.tier-card:hover::before { transform: scaleX(1); }
+
+.tier-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid var(--stone-dark);
+  color: var(--slate);
+  margin-bottom: 40px;
+}
+
+.tier-tag.premium {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(184,146,42,0.04);
+}
+
+.tier-tag .dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.tier-num {
+  font-family: var(--f-serif);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.tier-name {
+  font-family: var(--f-serif);
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.tier-name em { font-style: italic; color: var(--gold); }
+
+.tier-subtitle {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--slate);
+  opacity: 0.7;
+  margin-bottom: 32px;
+  font-family: var(--f-mono);
+  letter-spacing: 0.05em;
+}
+
+.tier-desc {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.75;
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+
+.tier-process {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 48px;
+}
+
+.process-step {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 18px 0;
+  border-top: 1px solid var(--stone-mid);
+}
+
+.process-step:last-child { border-bottom: 1px solid var(--stone-mid); }
+
+.process-idx {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  padding-top: 2px;
+  min-width: 24px;
+  opacity: 0.8;
+}
+
+.process-body {}
+.process-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.process-note {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--slate);
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+.tier-output-label {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.tier-output-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 6px 14px;
+  border: 1px solid var(--stone-dark);
+  color: var(--slate);
+  border-radius: 2px;
+  background: var(--ivory);
+}
+
+.chip.gold {
+  border-color: rgba(184,146,42,0.4);
+  color: var(--gold);
+  background: rgba(184,146,42,0.04);
+}
+
+/* ══════════════════════════════════════════════════
+   DASHBOARD FEATURES
+══════════════════════════════════════════════════ */
+.dashboard-section {
+  background: var(--white);
+  padding: 120px 0;
+}
+
+.dashboard-section .section-header {
+  padding: 0 72px 64px;
+  border-bottom: 1px solid rgba(14,13,11,0.08);
+  margin-bottom: 0;
+}
+
+.dashboard-section .section-kicker { color: var(--gold); }
+.dashboard-section .section-title { color: var(--ink); }
+.dashboard-section .section-count { color: rgba(14,13,11,0.2); }
+
+/* Dashboard mockup preview */
+.dashboard-mockup {
+  margin: 0 72px;
+  background: var(--white);
+  border: 1px solid rgba(14,13,11,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.12),
+    0 0 0 1px rgba(14,13,11,0.06);
+}
+
+.mockup-bar {
+  background: #f0ede8;
+  border-bottom: 1px solid rgba(14,13,11,0.08);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockup-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+}
+
+.mockup-url {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: rgba(14,13,11,0.3);
+  margin-left: 12px;
+  letter-spacing: 0.05em;
+}
+
+.mockup-body {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 520px;
+}
+
+.mockup-sidebar {
+  background: #f7f4f0;
+  border-right: 1px solid rgba(14,13,11,0.08);
+  padding: 24px 0;
+}
+
+.mock-logo {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid rgba(14,13,11,0.07);
+  margin-bottom: 20px;
+  font-family: var(--f-serif);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--ink);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.mock-prop-thumb {
+  margin: 0 12px 6px;
+  background: rgba(184,146,42,0.08);
+  border: 1px solid rgba(184,146,42,0.15);
+  border-radius: 3px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mock-prop-thumb.active {
+  background: rgba(184,146,42,0.15);
+  border-color: rgba(184,146,42,0.4);
+}
+
+.mock-prop-title {
+  font-family: var(--f-serif);
+  font-size: 12px;
+  color: rgba(14,13,11,0.8);
+  margin-bottom: 2px;
+}
+
+.mock-prop-meta {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: rgba(184,146,42,0.6);
+  letter-spacing: 0.1em;
+}
+
+.mock-nav {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(14,13,11,0.06);
+}
+
+.mock-nav-item {
+  padding: 8px 20px;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(14,13,11,0.35);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mock-nav-item.active {
+  color: var(--gold);
+}
+
+.mock-nav-icon {
+  width: 14px; height: 14px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.mockup-main {
+  padding: 28px 32px;
+}
+
+.mock-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(14,13,11,0.07);
+}
+
+.mock-prop-name {
+  font-family: var(--f-serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.mock-prop-location {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(184,146,42,0.6);
+  text-transform: uppercase;
+}
+
+.mock-price {
+  text-align: right;
+}
+
+.mock-price-val {
+  font-family: var(--f-serif);
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--gold-light);
+}
+
+.mock-price-label {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(14,13,11,0.3);
+  text-transform: uppercase;
+}
+
+.mock-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+}
+
+.mock-panel {
+  background: var(--stone);
+  border: 1px solid rgba(14,13,11,0.08);
+  border-radius: 3px;
+  padding: 16px 18px;
+}
+
+.mock-panel-label {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: rgba(184,146,42,0.5);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* 3D viewer placeholder */
+.mock-3d {
+  grid-row: span 2;
+  background: linear-gradient(135deg, #ece8e1 0%, #ddd8d0 100%);
+  border: 1px solid rgba(184,146,42,0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 260px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mock-3d-bg {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(184,146,42,0.06) 0%, transparent 60%),
+    linear-gradient(45deg, rgba(184,146,42,0.03) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(184,146,42,0.03) 25%, transparent 25%);
+  background-size: 100% 100%, 20px 20px, 20px 20px;
+}
+
+/* Wireframe mesh SVG */
+.mesh-svg {
+  position: absolute;
+  width: 100%; height: 100%;
+  top: 0; left: 0;
+  opacity: 0.15;
+}
+
+.mock-3d-label {
+  position: relative;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: rgba(184,146,42,0.7);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.mock-3d-btn {
+  position: relative;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 7px 16px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+/* Stats bar */
+.mock-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+}
+
+.mock-stat {
+  padding: 12px 14px;
+  border-right: 1px solid rgba(14,13,11,0.06);
+}
+
+.mock-stat:last-child { border-right: none; }
+
+.mock-stat-val {
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.mock-stat-label {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  color: rgba(14,13,11,0.35);
+  text-transform: uppercase;
+}
+
+/* DXF badge */
+.mock-dxf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dxf-icon {
+  width: 32px; height: 32px;
+  background: rgba(184,146,42,0.08);
+  border: 1px solid rgba(184,146,42,0.2);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-mono);
+  font-size: 7px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.dxf-info {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: rgba(250,248,244,0.4);
+}
+
+/* Feature grid */
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.05);
+  margin-top: 64px;
+}
+
+.feature-item {
+  background: var(--ink);
+  padding: 48px 40px;
+  border-top: 1px solid transparent;
+  transition: border-color 0.3s;
+  position: relative;
+}
+
+.feature-item:hover {
+  border-top-color: var(--gold);
+}
+
+.feature-icon {
+  width: 40px; height: 40px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+
+.feature-name {
+  font-family: var(--f-serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--ivory);
+  margin-bottom: 12px;
+  font-style: italic;
+}
+
+.feature-desc {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(250,248,244,0.4);
+  line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════════
+   VR / OUTPUT SECTION
+══════════════════════════════════════════════════ */
+.output-section {
+  background: var(--ivory);
+  padding: 120px 72px;
+}
+
+.output-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 80px;
+}
+
+.output-heading {
+  font-family: var(--f-serif);
+  font-size: clamp(34px, 3.5vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+
+.output-heading em { font-style: italic; color: var(--gold); }
+
+.output-text {
+  font-size: 15px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.8;
+  padding-top: 8px;
+}
+
+.outputs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  background: var(--stone-dark);
+  border: 2px solid var(--stone-dark);
+}
+
+.output-card {
+  background: var(--ivory);
+  padding: 40px 32px;
+  transition: background 0.3s;
+}
+
+.output-card:hover {
+  background: var(--white);
+}
+
+.output-card-num {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  opacity: 0.5;
+  margin-bottom: 20px;
+}
+
+.output-card-icon {
+  margin-bottom: 20px;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.output-card-title {
+  font-family: var(--f-serif);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.output-card-desc {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.7;
+  opacity: 0.8;
+}
+
+/* ══════════════════════════════════════════════════
+   PROCESSO (timeline)
+══════════════════════════════════════════════════ */
+.process-section {
+  background: var(--stone);
+  padding: 120px 72px;
+}
+
+.process-timeline {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  margin-top: 64px;
+  position: relative;
+}
+
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: 40px;
+  right: 40px;
+  height: 1px;
+  background: linear-gradient(to right, var(--gold) 0%, var(--stone-dark) 100%);
+}
+
+.timeline-step {
+  padding: 0 20px;
+  text-align: center;
+  position: relative;
+}
+
+.timeline-node {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--stone-dark);
+  background: var(--ivory);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  position: relative;
+  z-index: 1;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.timeline-step.highlight .timeline-node {
+  border-color: var(--gold);
+  background: var(--gold-pale);
+}
+
+.timeline-label {
+  font-family: var(--f-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.timeline-note {
+  font-size: 11px;
+  font-weight: 300;
+  color: var(--slate);
+  opacity: 0.7;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════════════
+   POSITIONING
+══════════════════════════════════════════════════ */
+.positioning {
+  background: var(--ink);
+  padding: 120px 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.positioning-text {}
+
+.positioning-text .section-kicker { color: var(--gold); }
+
+.positioning-heading {
+  font-family: var(--f-serif);
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ivory);
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.positioning-heading em { font-style: italic; color: var(--gold-light); }
+
+.positioning-body {
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(250,248,244,0.5);
+  line-height: 1.8;
+  margin-bottom: 40px;
+}
+
+.positioning-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pillar {
+  padding: 20px 0;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.pillar:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+
+.pillar-idx {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  color: var(--gold);
+  opacity: 0.6;
+  padding-top: 2px;
+  min-width: 20px;
+}
+
+.pillar-text {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(250,248,244,0.65);
+  line-height: 1.6;
+}
+
+.pillar-text strong {
+  color: var(--ivory);
+  font-weight: 400;
+}
+
+.positioning-visual {
+  background: #1a1710;
+  border: 1px solid rgba(184,146,42,0.15);
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pos-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.pos-row:last-child { border-bottom: none; }
+
+.pos-label {
+  font-size: 13px;
+  font-weight: 300;
+  color: rgba(250,248,244,0.5);
+}
+
+.pos-bar {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
+  margin: 0 24px;
+  position: relative;
+}
+
+.pos-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gold), var(--gold-light));
+  border-radius: 1px;
+}
+
+.pos-val {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--gold-light);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ══════════════════════════════════════════════════
+   PRICING
+══════════════════════════════════════════════════ */
+.pricing-section {
+  background: var(--stone);
+  padding: 120px 72px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--stone-dark);
+  margin-top: 64px;
+}
+
+.price-card {
+  background: var(--ivory);
+  padding: 48px 36px;
+  position: relative;
+  transition: transform 0.3s var(--ease-silk);
+}
+
+.price-card:hover { transform: translateY(-4px); z-index: 2; }
+
+.price-card.featured {
+  background: var(--ink);
+}
+
+.price-tier-label {
+  font-family: var(--f-mono);
+  font-size: 8px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+
+.price-card.featured .price-tier-label { color: var(--gold-light); }
+
+.price-name {
+  font-family: var(--f-serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.price-card.featured .price-name { color: var(--ivory); }
+
+.price-sub {
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--slate);
+  opacity: 0.7;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+.price-card.featured .price-sub { color: rgba(250,248,244,0.4); }
+
+.price-divider {
+  height: 1px;
+  background: var(--stone-dark);
+  margin-bottom: 32px;
+}
+
+.price-card.featured .price-divider { background: rgba(255,255,255,0.1); }
+
+.price-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.price-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+.price-card.featured .price-item { color: rgba(250,248,244,0.55); }
+
+.price-item-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+.price-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border: 1px solid rgba(184,146,42,0.3);
+  padding: 12px 20px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.price-cta:hover {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.price-card.featured .price-cta {
+  background: var(--gold);
+  color: var(--ink);
+  border-color: var(--gold);
+}
+
+.price-card.featured .price-cta:hover {
+  background: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+/* ══════════════════════════════════════════════════
+   FOOTER / CTA
+══════════════════════════════════════════════════ */
+.cta-section {
+  background: var(--ink);
+  padding: 140px 72px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 100%, rgba(184,146,42,0.1) 0%, transparent 60%);
+}
+
+.cta-kicker {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.cta-heading {
+  font-family: var(--f-serif);
+  font-size: clamp(44px, 5vw, 80px);
+  font-weight: 300;
+  color: var(--ivory);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.cta-heading em { font-style: italic; color: var(--gold-light); }
+
+.cta-sub {
+  font-size: 15px;
+  font-weight: 200;
+  color: rgba(250,248,244,0.4);
+  max-width: 480px;
+  margin: 0 auto 56px;
+  line-height: 1.7;
+  position: relative;
+}
+
+.cta-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  position: relative;
+}
+
+.btn-primary {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--gold);
+  padding: 16px 36px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-primary:hover { background: var(--gold-light); }
+
+.btn-ghost {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(250,248,244,0.5);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 16px 36px;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-ghost:hover {
+  color: var(--ivory);
+  border-color: rgba(255,255,255,0.4);
+}
+
+.footer-bar {
+  background: #0a0908;
+  padding: 28px 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.footer-logo {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: rgba(250,248,244,0.3);
+}
+
+.footer-logo span { color: var(--gold); opacity: 0.7; }
+
+.footer-legal {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: rgba(250,248,244,0.2);
+}
+
+/* ══════════════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scrollLine {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50%       { opacity: 1;   transform: scaleY(1.1); }
+}
+
+/* ══════════════════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-silk), transform 0.9s var(--ease-silk);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     HERO
+═══════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-line"></div>
+
+  <div class="hero-topbar">
+    <div class="logo-amt"><img src="logo-amt-white.png" alt="AMTitalia" style="height:32px; width:auto; display:block;"></div>
+    <div class="hero-date">Proposta commerciale — Giugno 2026</div>
+  </div>
+
+  <div class="scroll-cue">
+    <div class="scroll-cue-line"></div>
+    <div class="scroll-cue-text">Scroll</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Dashboard Immobiliare di Pregio</div>
+    <h1 class="hero-title">
+      Ogni immobile<br>
+      merita la propria<br>
+      <em>identità digitale.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Acquisizione 3D professionale, dashboard personalizzata per unità, walkthrough immersivo e output VR — tutto in un'unica piattaforma.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-from">
+        <div class="hero-from-label">Proposto da</div>
+        <div class="hero-from-name">AMTitalia — AI &amp; Digital Strategy</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div class="hero-from">
+        <div class="hero-from-label">Destinatari</div>
+        <div class="hero-from-name">Agenzie e proprietari di immobili di pregio</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     MANIFESTO
+═══════════════════════════════════ -->
+<section class="manifesto reveal">
+  <div class="manifesto-left">
+    <div class="manifesto-kicker">Il problema del settore</div>
+    <h2 class="manifesto-heading">
+      Il lusso si vende<br>
+      con le <em>emozioni</em>,<br>
+      non con le foto.
+    </h2>
+    <p class="manifesto-body">
+      Un immobile di pregio non può essere raccontato da una galleria fotografica piatta. L'acquirente vuole capire lo spazio, vivere l'atmosfera, percepire la scala. Vuole esplorare — non solo guardare.<br><br>
+      AMTitalia costruisce per ogni immobile una dashboard dedicata: un ambiente digitale che trasforma dati, geometria e narrazione in un'esperienza interattiva e memorabile.
+    </p>
+  </div>
+  <div class="manifesto-right">
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-num">73<span>%</span></div>
+        <div class="stat-label">degli acquirenti decide prima del sopralluogo</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">4×</div>
+        <div class="stat-label">più engagement con tour 3D vs gallerie foto</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">2.4<span>×</span></div>
+        <div class="stat-label">aumento delle richieste qualificate</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">100<span>%</span></div>
+        <div class="stat-label">dashboard personalizzata per immobile</div>
+      </div>
+    </div>
+    <p class="manifesto-note">
+      Il mercato del lusso richiede strumenti all'altezza. Oggi chi vende a €1M+ non può permettersi di presentare un immobile come tutti gli altri.
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     ACQUISIZIONE — 2 TIER
+═══════════════════════════════════ -->
+<section class="acquisition">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-kicker">Acquisizione dati</div>
+      <h2 class="section-title">Due approcci.<br><em>Un solo standard.</em></h2>
+    </div>
+    <div class="section-count">01 / 04</div>
+  </div>
+
+  <div class="tiers">
+    <!-- TIER A: Laser Scanner -->
+    <div class="tier-card reveal">
+      <div class="tier-tag">
+        <span class="dot"></span>
+        Tier A
+      </div>
+      <div class="tier-num">01</div>
+      <h3 class="tier-name">Laser Scanner<br><em>&amp; AI Texturing</em></h3>
+      <div class="tier-subtitle">Geometria precisa · Texture generate da AI</div>
+      <p class="tier-desc">
+        Acquisizione mediante laser scanner 3D ad alta risoluzione: il modello cattura con precisione millimetrica la geometria dell'intero immobile. Le texture sono generate artificialmente tramite AI, a partire da foto di riferimento scattate in loco. Il risultato è un modello fotorealistico con texture coerenti con il reale, anche in assenza di acquisizione fotogrammetrica completa.
+      </p>
+      <div class="tier-process">
+        <div class="process-step">
+          <div class="process-idx">01</div>
+          <div class="process-body">
+            <div class="process-label">Scansione laser dell'immobile</div>
+            <div class="process-note">Point cloud ad alta densità — ogni ambiente, ogni superficie.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">02</div>
+          <div class="process-body">
+            <div class="process-label">Fotografia di riferimento</div>
+            <div class="process-note">Set fotografico ambientale per training texture AI.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">03</div>
+          <div class="process-body">
+            <div class="process-label">AI texturization</div>
+            <div class="process-note">Applicazione texture generate da modelli AI addestrati sulle foto reali.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">04</div>
+          <div class="process-body">
+            <div class="process-label">Modello 3D ottimizzato</div>
+            <div class="process-note">Export per web, VR e dashboard dedicata.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-output-label">Output inclusi</div>
+      <div class="tier-output-chips">
+        <span class="chip">Modello 3D texturizzato</span>
+        <span class="chip">Planimetrie DXF</span>
+        <span class="chip">Walkthrough web</span>
+        <span class="chip">Dashboard base</span>
+        <span class="chip gold">AI-generated textures</span>
+      </div>
+    </div>
+
+    <!-- TIER B: Fotogrammetria -->
+    <div class="tier-card reveal">
+      <div class="tier-tag premium">
+        <span class="dot"></span>
+        Tier B — Premium
+      </div>
+      <div class="tier-num">02</div>
+      <h3 class="tier-name">Fotogrammetria<br><em>Completa</em></h3>
+      <div class="tier-subtitle">Texture reali · Massima fedeltà visiva</div>
+      <p class="tier-desc">
+        Acquisizione fotogrammetrica ad alta risoluzione: migliaia di foto calibrate restituiscono un modello 3D con texture reali, colori veri e fedeltà visiva assoluta a ogni superficie. La geometria e la materialità dell'immobile sono catturate simultaneamente. È il metodo più completo per immobili di rilievo storico, architettonico o di alto valore estetico.
+      </p>
+      <div class="tier-process">
+        <div class="process-step">
+          <div class="process-idx">01</div>
+          <div class="process-body">
+            <div class="process-label">Campagna fotografica sistematica</div>
+            <div class="process-note">Copertura totale di ogni ambiente con overlap calibrato.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">02</div>
+          <div class="process-body">
+            <div class="process-label">Elaborazione fotogrammetrica</div>
+            <div class="process-note">Ricostruzione point cloud e mesh da foto sovrapposte.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">03</div>
+          <div class="process-body">
+            <div class="process-label">Texture mapping reale</div>
+            <div class="process-note">Proiezione delle texture fotografiche sul modello 3D.</div>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="process-idx">04</div>
+          <div class="process-body">
+            <div class="process-label">Ottimizzazione &amp; delivery completa</div>
+            <div class="process-note">LOD multipli, export VR, integrazione dashboard avanzata.</div>
+          </div>
+        </div>
+      </div>
+      <div class="tier-output-label">Output inclusi</div>
+      <div class="tier-output-chips">
+        <span class="chip gold">Modello 3D texture reale</span>
+        <span class="chip gold">Point cloud originale</span>
+        <span class="chip">Planimetrie DXF/DWG</span>
+        <span class="chip">Walkthrough VR completo</span>
+        <span class="chip">Dashboard full</span>
+        <span class="chip">Rilievo metrico certificato</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     DASHBOARD — MOCKUP E FEATURES
+═══════════════════════════════════ -->
+<section class="dashboard-section">
+  <div class="section-header">
+    <div>
+      <div class="section-kicker">La piattaforma</div>
+      <h2 class="section-title" style="color: var(--ivory);">Dashboard<br><em>per ogni immobile.</em></h2>
+    </div>
+    <div class="section-count">02 / 04</div>
+  </div>
+
+  <!-- Mockup UI -->
+  <div class="dashboard-mockup reveal" style="margin-top: 48px;">
+    <div class="mockup-bar">
+      <div class="mockup-dot" style="background:#e24b4a"></div>
+      <div class="mockup-dot" style="background:#ef9f27"></div>
+      <div class="mockup-dot" style="background:#1d9e75"></div>
+      <div class="mockup-url">estate.dashboard · Villa Malcontenta — Brenta · Rif. VB-2026-04</div>
+    </div>
+    <div class="mockup-body">
+      <!-- Sidebar -->
+      <div class="mockup-sidebar">
+        <div class="mock-logo">Villa Malcontenta</div>
+
+        <div class="mock-prop-thumb active">
+          <div class="mock-prop-title">Villa Malcontenta</div>
+          <div class="mock-prop-meta">Brenta · €4,200,000</div>
+        </div>
+        <div class="mock-prop-thumb">
+          <div class="mock-prop-title">Palazzo Grimani</div>
+          <div class="mock-prop-meta">Venezia · €8,500,000</div>
+        </div>
+        <div class="mock-prop-thumb">
+          <div class="mock-prop-title">Villa dei Cedri</div>
+          <div class="mock-prop-meta">Lago di Como · €3,800,000</div>
+        </div>
+
+        <div class="mock-nav">
+          <div class="mock-nav-item active">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="1" width="5" height="5" stroke="currentColor" stroke-width="1"/>
+              <rect x="8" y="1" width="5" height="5" stroke="currentColor" stroke-width="1"/>
+              <rect x="1" y="8" width="5" height="5" stroke="currentColor" stroke-width="1"/>
+              <rect x="8" y="8" width="5" height="5" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Overview
+          </div>
+          <div class="mock-nav-item">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <path d="M7 1L13 5V13H1V5L7 1Z" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            3D Walkthrough
+          </div>
+          <div class="mock-nav-item">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="3" width="12" height="9" stroke="currentColor" stroke-width="1"/>
+              <path d="M4 3V1h6v2" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            VR Mode
+          </div>
+          <div class="mock-nav-item">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <path d="M1 13L1 1L13 8L7 9L5 13L1 13Z" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Planimetrie
+          </div>
+          <div class="mock-nav-item">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1"/>
+              <path d="M7 4V7L9 9" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Ambienti
+          </div>
+          <div class="mock-nav-item">
+            <svg class="mock-nav-icon" viewBox="0 0 14 14" fill="none">
+              <path d="M2 10L5 7L8 9L12 4" stroke="currentColor" stroke-width="1"/>
+              <rect x="1" y="1" width="12" height="12" stroke="currentColor" stroke-width="1"/>
+            </svg>
+            Analytics
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="mockup-main">
+        <div class="mock-header">
+          <div>
+            <div class="mock-prop-name">Villa Malcontenta</div>
+            <div class="mock-prop-location">Mira, Brenta Riviera · Venezia · Vincolo UNESCO</div>
+          </div>
+          <div class="mock-price">
+            <div class="mock-price-val">€ 4.200.000</div>
+            <div class="mock-price-label">Prezzo richiesto</div>
+          </div>
+        </div>
+
+        <div class="mock-grid">
+          <!-- 3D Viewer -->
+          <div class="mock-3d">
+            <div class="mock-3d-bg"></div>
+            <!-- Wireframe SVG mesh -->
+            <svg class="mesh-svg" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+              <!-- Rough building wireframe perspective -->
+              <g stroke="#b8922a" fill="none" stroke-width="0.8">
+                <!-- Base rectangle -->
+                <polygon points="60,150 240,150 270,120 90,120" />
+                <!-- Front face -->
+                <polygon points="60,150 90,120 90,60 60,90" />
+                <!-- Top face -->
+                <polygon points="60,90 90,60 240,60 210,90" />
+                <!-- Side -->
+                <polygon points="210,90 240,60 270,90 240,120" />
+                <!-- Back face -->
+                <polygon points="240,120 270,90 270,60 240,60" />
+                <!-- Windows front -->
+                <rect x="65" y="100" width="12" height="14" />
+                <rect x="65" y="75" width="12" height="12" />
+                <!-- Windows perspective side -->
+                <line x1="100" y1="80" x2="112" y2="80" />
+                <line x1="100" y1="94" x2="112" y2="94" />
+                <line x1="100" y1="80" x2="100" y2="94" />
+                <line x1="112" y1="80" x2="112" y2="94" />
+                <!-- Ground lines -->
+                <line x1="30" y1="150" x2="280" y2="150" opacity="0.3"/>
+                <line x1="30" y1="155" x2="280" y2="155" opacity="0.1"/>
+                <!-- Depth grid lines -->
+                <line x1="120" y1="120" x2="150" y2="60" opacity="0.25" />
+                <line x1="150" y1="120" x2="180" y2="60" opacity="0.25" />
+                <line x1="180" y1="120" x2="210" y2="60" opacity="0.25" />
+                <line x1="90" y1="80" x2="240" y2="80" opacity="0.15" />
+                <line x1="90" y1="100" x2="240" y2="100" opacity="0.15" />
+              </g>
+            </svg>
+            <div class="mock-3d-label">Modello 3D Fotogrammetrico<br>Ruota · Esplora · Misura</div>
+            <div class="mock-3d-btn">Avvia Walkthrough →</div>
+          </div>
+
+          <!-- Stats panel -->
+          <div class="mock-panel">
+            <div class="mock-panel-label">Dati Immobile</div>
+            <div class="mock-stats">
+              <div class="mock-stat">
+                <div class="mock-stat-val">1.240</div>
+                <div class="mock-stat-label">mq lordi</div>
+              </div>
+              <div class="mock-stat">
+                <div class="mock-stat-val">18</div>
+                <div class="mock-stat-label">ambienti</div>
+              </div>
+              <div class="mock-stat">
+                <div class="mock-stat-val">1560</div>
+                <div class="mock-stat-label">Anno</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- DXF viewer -->
+          <div class="mock-panel">
+            <div class="mock-panel-label">Planimetrie CAD</div>
+            <div class="mock-dxf">
+              <div class="dxf-icon">DXF</div>
+              <div class="dxf-info">
+                Piano terra — 4 file<br>
+                <span style="opacity:0.5; font-size:8px">Aggiornato: 02/06/2026</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feature list -->
+  <div class="features-list">
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" stroke="#b8922a" stroke-width="1" fill="none"/>
+        <path d="M20 4V36M4 12L36 28M36 12L4 28" stroke="#b8922a" stroke-width="0.5" opacity="0.4"/>
+      </svg>
+      <div class="feature-name">Walkthrough 3D Web</div>
+      <p class="feature-desc">Navigazione interattiva del modello 3D direttamente nel browser — Babylon.js o Three.js. Nessun plugin, nessun download. Click-to-explore su ogni ambiente.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="6" y="10" width="28" height="20" stroke="#b8922a" stroke-width="1"/>
+        <path d="M6 18H34M6 22H34M14 10V30M26 10V30" stroke="#b8922a" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+      <div class="feature-name">Output VR</div>
+      <p class="feature-desc">Esportazione nativa per visori VR (Meta Quest, Apple Vision Pro). L'acquirente visita l'immobile da qualsiasi parte del mondo con esperienza immersiva completa.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 32L8 16L20 8L32 16V32H8Z" stroke="#b8922a" stroke-width="1"/>
+        <rect x="15" y="22" width="10" height="10" stroke="#b8922a" stroke-width="0.8"/>
+        <path d="M20 8V18" stroke="#b8922a" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+      <div class="feature-name">Visualizzatore DXF/DWG</div>
+      <p class="feature-desc">Integrazione diretta di planimetrie CAD nella dashboard. Visualizzazione layer-by-layer, misure interattive, download e condivisione con un click.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="20" cy="20" r="14" stroke="#b8922a" stroke-width="1"/>
+        <circle cx="20" cy="20" r="6" stroke="#b8922a" stroke-width="0.8"/>
+        <path d="M20 6V14M20 26V34M6 20H14M26 20H34" stroke="#b8922a" stroke-width="0.5" opacity="0.5"/>
+      </svg>
+      <div class="feature-name">Dati &amp; Analytics</div>
+      <p class="feature-desc">Scheda tecnica completa dell'immobile: metrature, consistenze, storico, vincoli, rendite catastali. Dashboard analytics sulle sessioni di visita digitale.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 28L20 12L30 28H10Z" stroke="#b8922a" stroke-width="1"/>
+        <path d="M10 28C10 28 15 22 20 24C25 26 30 28 30 28" stroke="#b8922a" stroke-width="0.6" opacity="0.4"/>
+      </svg>
+      <div class="feature-name">Descrizione Ambienti</div>
+      <p class="feature-desc">Sezione narrativa per ogni ambiente: descrizione editoriale, materiali, luce, atmosfera. Testo generato con AI e rifinito da redazione — un racconto, non un elenco.</p>
+    </div>
+    <div class="feature-item reveal">
+      <svg class="feature-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 12L20 6L32 12V28L20 34L8 28V12Z" stroke="#b8922a" stroke-width="1"/>
+        <path d="M20 6V34M8 12L32 28M32 12L8 28" stroke="#b8922a" stroke-width="0.4" opacity="0.35"/>
+        <circle cx="20" cy="20" r="4" stroke="#b8922a" stroke-width="0.8"/>
+      </svg>
+      <div class="feature-name">Dashboard dedicata per immobile</div>
+      <p class="feature-desc">URL univoco per ogni proprietà. Branding personalizzabile, accesso controllato per i potenziali acquirenti, link condivisibile con agenti e notai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     OUTPUT SECTION
+═══════════════════════════════════ -->
+<section class="output-section">
+  <div class="output-intro">
+    <div>
+      <div class="section-kicker" style="font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px;">Deliverable</div>
+      <h2 class="output-heading reveal">
+        Cosa ricevi<br>
+        alla <em>consegna.</em>
+      </h2>
+    </div>
+    <p class="output-text reveal">
+      Ogni progetto si conclude con un set di deliverable strutturati. Non solo un link da mandare: un ecosistema digitale costruito intorno all'immobile, pronto per essere usato in ogni fase della trattativa — dalla prima presentazione alla due diligence finale.
+    </p>
+  </div>
+
+  <div class="outputs-grid reveal">
+    <div class="output-card">
+      <div class="output-card-num">01</div>
+      <div class="output-card-icon">⬡</div>
+      <h3 class="output-card-title">Modello 3D</h3>
+      <p class="output-card-desc">File mesh ottimizzato (GLTF/GLB) per web e VR. Compatibile con i principali viewer e piattaforme di visualizzazione.</p>
+    </div>
+    <div class="output-card">
+      <div class="output-card-num">02</div>
+      <div class="output-card-icon">⬡</div>
+      <h3 class="output-card-title">Dashboard Web</h3>
+      <p class="output-card-desc">URL dedicato, responsive, accessibile da desktop e mobile. Personalizzabile con brand dell'agenzia o del venditore.</p>
+    </div>
+    <div class="output-card">
+      <div class="output-card-num">03</div>
+      <div class="output-card-icon">⬡</div>
+      <h3 class="output-card-title">Tour VR Standalone</h3>
+      <p class="output-card-desc">Pacchetto ottimizzato per Meta Quest. Distribuibile direttamente su device dedicato per showroom o eventi privati.</p>
+    </div>
+    <div class="output-card">
+      <div class="output-card-num">04</div>
+      <div class="output-card-icon">⬡</div>
+      <h3 class="output-card-title">File CAD / DXF</h3>
+      <p class="output-card-desc">Planimetrie vettoriali derivate dalla scansione. Compatibili con AutoCAD, ArchiCAD e tutti i software di progettazione.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PROCESSO
+═══════════════════════════════════ -->
+<section class="process-section">
+  <div class="section-header reveal" style="border: none; padding: 0 0 0 0;">
+    <div>
+      <div class="section-kicker">Come lavoriamo</div>
+      <h2 class="section-title">Dal sopralluogo<br>alla <em>consegna.</em></h2>
+    </div>
+    <div class="section-count">03 / 04</div>
+  </div>
+
+  <div class="process-timeline">
+    <div class="timeline-step reveal">
+      <div class="timeline-node">01</div>
+      <div class="timeline-label">Brief</div>
+      <p class="timeline-note">Analisi dell'immobile, definizione tier, pianificazione sopralluogo.</p>
+    </div>
+    <div class="timeline-step reveal">
+      <div class="timeline-node">02</div>
+      <div class="timeline-label">Acquisizione</div>
+      <p class="timeline-note">Laser scanner o campagna fotogrammetrica in loco.</p>
+    </div>
+    <div class="timeline-step highlight reveal">
+      <div class="timeline-node">03</div>
+      <div class="timeline-label">Elaborazione</div>
+      <p class="timeline-note">Ricostruzione mesh, texturizzazione AI o reale, ottimizzazione LOD.</p>
+    </div>
+    <div class="timeline-step reveal">
+      <div class="timeline-node">04</div>
+      <div class="timeline-label">Dashboard</div>
+      <p class="timeline-note">Sviluppo e configurazione della piattaforma personalizzata.</p>
+    </div>
+    <div class="timeline-step reveal">
+      <div class="timeline-node">05</div>
+      <div class="timeline-label">Delivery</div>
+      <p class="timeline-note">Consegna link, file, VR package e documentazione tecnica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     POSITIONING
+═══════════════════════════════════ -->
+<section class="positioning">
+  <div class="positioning-text reveal">
+    <div class="section-kicker">Perché AMTitalia</div>
+    <h2 class="positioning-heading">
+      Non un servizio.<br>
+      Un <em>partner</em><br>
+      strategico.
+    </h2>
+    <p class="positioning-body">
+      AMTitalia non produce solo contenuto digitale. Costruisce strumenti che cambiano la percezione di un immobile — e quindi il suo valore percepito, il tempo di vendita e la qualità dei potenziali acquirenti.
+    </p>
+    <div class="positioning-pillars">
+      <div class="pillar">
+        <div class="pillar-idx">01</div>
+        <div class="pillar-text"><strong>AI nativa</strong> — usiamo l'intelligenza artificiale nel processo produttivo, non come gadget ma come infrastruttura.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-idx">02</div>
+        <div class="pillar-text"><strong>Ogni dashboard è unica</strong> — nessun template generico. Ogni immobile ha la sua identità digitale.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-idx">03</div>
+        <div class="pillar-text"><strong>Stack tecnologico aperto</strong> — tutti i file sono vostri. Nessun lock-in su piattaforme proprietarie.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-idx">04</div>
+        <div class="pillar-text"><strong>Revenue share disponibile</strong> — per agenzie e gestori di portfolio, modello economico alternativo valutabile.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="positioning-visual reveal">
+    <div style="font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.2em; color: rgba(184,146,42,0.5); text-transform: uppercase; margin-bottom: 24px;">Confronto di posizionamento</div>
+    <div class="pos-row">
+      <div class="pos-label">Fotografia tradizionale</div>
+      <div class="pos-bar"><div class="pos-fill" style="width: 20%"></div></div>
+      <div class="pos-val">Base</div>
+    </div>
+    <div class="pos-row">
+      <div class="pos-label">Tour virtuale standard</div>
+      <div class="pos-bar"><div class="pos-fill" style="width: 40%"></div></div>
+      <div class="pos-val">Medio</div>
+    </div>
+    <div class="pos-row">
+      <div class="pos-label">Laser Scanner + AI Tex.</div>
+      <div class="pos-bar"><div class="pos-fill" style="width: 72%"></div></div>
+      <div class="pos-val">Alto</div>
+    </div>
+    <div class="pos-row">
+      <div class="pos-label">Fotogrammetria + Dashboard</div>
+      <div class="pos-bar"><div class="pos-fill" style="width: 100%"></div></div>
+      <div class="pos-val" style="color: var(--gold-light); font-weight: 500;">Premium</div>
+    </div>
+    <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.07);">
+      <div style="font-family: var(--f-serif); font-size: 13px; color: rgba(250,248,244,0.4); font-style: italic; line-height: 1.7;">
+        "Il prezzo di vendita di un immobile di pregio è proporzionale alla qualità della sua presentazione. La dashboard non è un costo — è un investimento."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     PRICING
+═══════════════════════════════════ -->
+<section class="pricing-section">
+  <div class="section-header reveal" style="border: none; padding: 0 0 0 0;">
+    <div>
+      <div class="section-kicker">Investimento</div>
+      <h2 class="section-title">Tre configurazioni.<br><em>Scala con l'immobile.</em></h2>
+    </div>
+    <div class="section-count">04 / 04</div>
+  </div>
+
+  <div class="pricing-grid">
+    <!-- Tier A -->
+    <div class="price-card reveal">
+      <div class="price-tier-label">Tier A · Essenziale</div>
+      <div class="price-name">Scanner<br>+ AI Tex.</div>
+      <div class="price-sub">Per immobili residenziali di pregio</div>
+      <div class="price-divider"></div>
+      <div class="price-items">
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Laser scan dell'immobile (fino a 500 mq)
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Set fotografico di riferimento in loco
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          AI texturization del modello 3D
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Walkthrough web interattivo
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Dashboard base + planimetrie DXF
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          URL dedicato per 12 mesi
+        </div>
+      </div>
+      <a href="mailto:info@amtitalia.com?subject=Richiesta Tier A - Scanner AI" class="price-cta">Richiedi preventivo →</a>
+    </div>
+
+    <!-- FEATURED: Tier B -->
+    <div class="price-card featured reveal">
+      <div class="price-tier-label">Tier B · Premium</div>
+      <div class="price-name" style="color: var(--ivory);">Fotogrammetria<br>Completa</div>
+      <div class="price-sub">Per immobili di eccellenza e rilievo</div>
+      <div class="price-divider"></div>
+      <div class="price-items">
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Campagna fotogrammetrica ad alta risoluzione
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Modello 3D con texture reali
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Point cloud originale incluso
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Walkthrough web + output VR standalone
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Dashboard completa + DXF/DWG + analytics
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Descrizione editoriale AI per ogni ambiente
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Rilievo metrico certificato
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          URL dedicato 24 mesi + branding personalizzato
+        </div>
+      </div>
+      <a href="mailto:info@amtitalia.com?subject=Richiesta Tier B - Fotogrammetria" class="price-cta">Richiedi preventivo →</a>
+    </div>
+
+    <!-- Portfolio/Agency -->
+    <div class="price-card reveal">
+      <div class="price-tier-label">Tier C · Portfolio</div>
+      <div class="price-name">Pacchetto<br>Agenzia</div>
+      <div class="price-sub">Per agenzie e gestori multi-immobile</div>
+      <div class="price-divider"></div>
+      <div class="price-items">
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Da 3 immobili in su — tariffe dedicate
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Dashboard multi-property con brand agenzia
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Scelta tier A o B per ogni unità
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Pannello di gestione centralizzato
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Analytics aggregata su tutto il portfolio
+        </div>
+        <div class="price-item">
+          <div class="price-item-dot"></div>
+          Revenue share model valutabile
+        </div>
+      </div>
+      <a href="mailto:info@amtitalia.com?subject=Richiesta Portfolio Agency" class="price-cta">Parliamo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════
+     CTA
+═══════════════════════════════════ -->
+<section class="cta-section">
+  <div class="cta-bg"></div>
+  <div class="cta-kicker">Prossimo passo</div>
+  <h2 class="cta-heading reveal">
+    Quale immobile<br>
+    vuoi <em>valorizzare</em><br>
+    per primo?
+  </h2>
+  <p class="cta-sub reveal">
+    Partiamo da un immobile pilota. Ti mostriamo l'output completo prima di qualsiasi impegno su scala.
+  </p>
+  <div class="cta-actions reveal">
+    <a href="mailto:info@amtitalia.com?subject=Proposta Dashboard Immobiliare" class="btn-primary">Contattaci ora</a>
+    <a href="https://www.amtitalia.com" target="_blank" class="btn-ghost">www.amtitalia.com</a>
+  </div>
+</section>
+
+<div class="footer-bar">
+  <div class="footer-logo">AMT<span>italia</span> — AI &amp; Digital Strategy</div>
+  <div class="footer-legal">Proposta riservata · Giugno 2026 · Tutti i diritti riservati</div>
+</div>
+
+<!-- ═══════════════════════════════════
+     SCROLL REVEAL SCRIPT
+═══════════════════════════════════ -->
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        // Stagger siblings
+        const siblings = [...e.target.parentElement.querySelectorAll('.reveal')];
+        const idx = siblings.indexOf(e.target);
+        e.target.style.transitionDelay = `${idx * 0.07}s`;
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
