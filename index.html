@@ -984,6 +984,200 @@ body {
   opacity: 0.8;
 }
 
+/* ─── VIEW SWITCHER (Tour / Gemello) ─── */
+.mock-view-switcher {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(14,13,11,0.08);
+  background: #f0ede8;
+}
+.mvs-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 18px;
+  font-family: var(--f-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(14,13,11,0.4);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: -1px;
+}
+.mvs-tab svg { width: 11px; height: 11px; opacity: 0.6; }
+.mvs-tab.mvs-active {
+  color: var(--ink);
+  border-bottom-color: var(--gold);
+}
+.mvs-tab.mvs-active svg { opacity: 1; }
+
+/* ─── DIGITAL TWIN PANEL ─── */
+.mock-twin-wrapper {
+  position: relative;
+  background: #f5f1eb;
+  display: flex;
+  flex-direction: column;
+}
+.mock-twin-modebar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(14,13,11,0.07);
+  background: var(--white);
+}
+.mtm-btn {
+  font-family: var(--f-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 20px;
+  border: 1px solid rgba(14,13,11,0.12);
+  background: none;
+  color: rgba(14,13,11,0.45);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 5px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.mtm-btn svg { width: 11px; height: 11px; }
+.mtm-btn:hover { background: var(--stone); color: var(--ink); }
+.mtm-active {
+  background: var(--ink) !important;
+  color: var(--ivory) !important;
+  border-color: var(--ink) !important;
+}
+.mtm-ai {
+  margin-left: auto;
+  background: var(--gold) !important;
+  color: var(--ink) !important;
+  border-color: var(--gold) !important;
+  font-weight: 500;
+}
+
+/* ─── SVG VIEWER AREA ─── */
+.mock-twin-viewer {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  min-height: 340px;
+}
+.twin-svg {
+  width: 100%; height: 100%;
+  display: block;
+}
+
+/* ─── FLOOR SELECTOR (left) ─── */
+.mock-twin-floors {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+}
+.mtf-label {
+  font-family: var(--f-mono);
+  font-size: 7px;
+  letter-spacing: 0.2em;
+  color: rgba(14,13,11,0.3);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.mtf-btn {
+  width: 34px; height: 28px;
+  font-family: var(--f-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(14,13,11,0.14);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.7);
+  color: rgba(14,13,11,0.45);
+  cursor: pointer;
+  transition: all 0.15s;
+  backdrop-filter: blur(4px);
+}
+.mtf-btn:hover { background: var(--white); color: var(--ink); }
+.mtf-active {
+  background: var(--white) !important;
+  color: var(--ink) !important;
+  border-color: var(--gold) !important;
+  border-width: 1.5px !important;
+}
+.mtf-sep {
+  width: 1px; height: 12px;
+  background: rgba(14,13,11,0.1);
+  margin: 2px 0;
+}
+
+/* ─── ZOOM CONTROLS (right) ─── */
+.mock-twin-zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.mtz-btn {
+  width: 28px; height: 28px;
+  border: 1px solid rgba(14,13,11,0.14);
+  border-radius: 3px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(4px);
+  color: rgba(14,13,11,0.6);
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.mtz-btn:hover { background: var(--white); color: var(--ink); }
+.mtz-btn svg { width: 13px; height: 13px; }
+
+/* ─── BOTTOM INFO STRIP ─── */
+.mock-twin-info {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 7px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(14,13,11,0.07);
+}
+.mti-name {
+  font-family: var(--f-serif);
+  font-size: 12px;
+  font-style: italic;
+  color: var(--ink);
+}
+.mti-meta {
+  font-family: var(--f-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.15em;
+  color: rgba(14,13,11,0.4);
+  text-transform: uppercase;
+  display: flex; gap: 16px;
+}
+.mti-badge {
+  font-family: var(--f-mono);
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: rgba(184,146,42,0.1);
+  color: var(--gold);
+  border: 1px solid rgba(184,146,42,0.2);
+}
+
 /* DXF badge */
 .mock-dxf {
   display: flex;
@@ -1994,6 +2188,21 @@ body {
       <div class="mockup-dot" style="background:#1d9e75"></div>
       <div class="mockup-url">estate.dashboard · Villa Malcontenta — Brenta · Rif. VB-2026-04</div>
     </div>
+
+    <!-- View switcher: Tour / Gemello Digitale -->
+    <div class="mock-view-switcher">
+      <button class="mvs-tab mvs-active" onclick="switchMockView('mock-panel-dash', this)">
+        <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="2" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="3.5" cy="5" r="1" stroke="currentColor" stroke-width="0.8"/><path d="M1 9l2.5-2.5 2 1.5 2-2.5 4 4" stroke="currentColor" stroke-width="0.8"/></svg>
+        Tour fotografico
+      </button>
+      <button class="mvs-tab" onclick="switchMockView('mock-panel-twin', this)">
+        <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5L6 1Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.5"/></svg>
+        Gemello Digitale
+      </button>
+    </div>
+
+    <!-- Panel 1: Dashboard standard -->
+    <div id="mock-panel-dash">
     <div class="mockup-body">
       <!-- Sidebar -->
       <div class="mockup-sidebar">
@@ -2363,7 +2572,221 @@ body {
 
       </div>
     </div>
-  </div>
+    </div><!-- /mock-panel-dash -->
+
+    <!-- Panel 2: Gemello Digitale -->
+    <div id="mock-panel-twin" style="display:none;">
+      <div class="mock-twin-wrapper">
+
+        <!-- Mode bar -->
+        <div class="mock-twin-modebar">
+          <button class="mtm-btn">
+            <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1"/><circle cx="6" cy="6" r="1.5" fill="currentColor"/></svg>
+            Prima persona
+          </button>
+          <button class="mtm-btn">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1l1.5 3.5H11L8 7l1 4-3-2-3 2 1-4-3-2.5h3.5Z" stroke="currentColor" stroke-width="0.9"/></svg>
+            Volo libero
+          </button>
+          <button class="mtm-btn mtm-active">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M6 1L11 3.5V8.5L6 11L1 8.5V3.5Z" stroke="currentColor" stroke-width="1"/><path d="M6 1V11M1 3.5L11 3.5M1 8.5L11 8.5" stroke="currentColor" stroke-width="0.6" opacity="0.6"/></svg>
+            Isometrica
+          </button>
+          <button class="mtm-btn">
+            <svg viewBox="0 0 12 12" fill="none"><rect x="1" y="3" width="4" height="3" stroke="currentColor" stroke-width="0.9"/><rect x="7" y="3" width="4" height="3" stroke="currentColor" stroke-width="0.9"/><rect x="1" y="7" width="4" height="3" stroke="currentColor" stroke-width="0.9"/><rect x="7" y="7" width="4" height="3" stroke="currentColor" stroke-width="0.9"/></svg>
+            Catalogo
+          </button>
+          <button class="mtm-btn mtm-ai">✦ AI Render</button>
+        </div>
+
+        <!-- SVG Viewer -->
+        <div class="mock-twin-viewer">
+
+          <!-- ISOMETRIC BUILDING SVG -->
+          <svg class="twin-svg" viewBox="40 60 420 270" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <!-- Wall gradients -->
+              <linearGradient id="tw-front" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e8dfd0"/><stop offset="100%" stop-color="#d8cec0"/>
+              </linearGradient>
+              <linearGradient id="tw-right" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#cdc3b4"/><stop offset="100%" stop-color="#bfb5a6"/>
+              </linearGradient>
+              <linearGradient id="tw-back-l" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#b8ae9e"/><stop offset="100%" stop-color="#c8bfb0"/>
+              </linearGradient>
+              <linearGradient id="tw-back-r" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#c0b8a8"/><stop offset="100%" stop-color="#b0a898"/>
+              </linearGradient>
+              <linearGradient id="tw-floor1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ede5d5"/><stop offset="100%" stop-color="#e0d8c8"/>
+              </linearGradient>
+              <linearGradient id="tw-floor2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f0e8d8"/><stop offset="100%" stop-color="#e5dccb"/>
+              </linearGradient>
+              <linearGradient id="tw-ground" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#d0c8b5"/><stop offset="100%" stop-color="#c0b8a5"/>
+              </linearGradient>
+              <pattern id="tw-tile1" x="0" y="0" width="14" height="8" patternUnits="userSpaceOnUse" patternTransform="skewX(-30)">
+                <rect width="14" height="8" fill="none" stroke="rgba(14,13,11,0.07)" stroke-width="0.5"/>
+              </pattern>
+              <pattern id="tw-tile2" x="0" y="0" width="14" height="8" patternUnits="userSpaceOnUse" patternTransform="skewX(30)">
+                <rect width="14" height="8" fill="none" stroke="rgba(14,13,11,0.06)" stroke-width="0.5"/>
+              </pattern>
+            </defs>
+
+            <!-- ══ GROUND PLANE ══ -->
+            <polygon points="235,310 395,218 310,168 150,260" fill="url(#tw-ground)" opacity="0.5"/>
+
+            <!-- ══ BACK-LEFT WALL (x=0, z=0..100) ══ -->
+            <polygon points="150,260 235,310 235,215 150,165" fill="url(#tw-back-l)"/>
+            <!-- Window back-left -->
+            <rect x="160" y="200" width="22" height="30" rx="1" fill="#9a9285" opacity="0.6"/>
+            <rect x="160" y="240" width="22" height="22" rx="1" fill="#a09385" opacity="0.5"/>
+            <!-- Floor line back-left -->
+            <line x1="150" y1="212" x2="235" y2="262" stroke="rgba(14,13,11,0.15)" stroke-width="0.8"/>
+
+            <!-- ══ BACK-RIGHT WALL (y=110, z=0..100) ══ -->
+            <polygon points="235,310 395,218 395,123 235,215" fill="url(#tw-back-r)"/>
+            <!-- Windows back-right -->
+            <polygon points="255,285 280,271 280,248 255,262" fill="#9a9285" opacity="0.55" rx="1"/>
+            <polygon points="300,261 325,247 325,224 300,238" fill="#9a9285" opacity="0.55"/>
+            <polygon points="345,237 370,223 370,200 345,214" fill="#9a9285" opacity="0.55"/>
+            <!-- Floor line back-right -->
+            <line x1="235" y1="262" x2="395" y2="170" stroke="rgba(14,13,11,0.15)" stroke-width="0.8"/>
+
+            <!-- ══ FLOOR 1 CEILING (z=50) ══ -->
+            <!-- Main floor plate -->
+            <polygon points="150,212 235,262 395,170 310,120" fill="url(#tw-floor1)"/>
+            <!-- Tile grid on floor 1 -->
+            <polygon points="150,212 235,262 395,170 310,120" fill="url(#tw-tile1)" opacity="0.7"/>
+            <!-- Interior partition front-back at x=80 -->
+            <line x1="236" y1="227" x2="310" y2="185" stroke="rgba(14,13,11,0.2)" stroke-width="1.2"/>
+            <!-- Interior partition left-right at y=55 -->
+            <line x1="192" y1="236" x2="350" y2="145" stroke="rgba(14,13,11,0.15)" stroke-width="0.8"/>
+            <!-- Staircase symbol -->
+            <g opacity="0.5">
+              <line x1="164" y1="228" x2="185" y2="240" stroke="#8a7a64" stroke-width="1.5"/>
+              <line x1="170" y1="224" x2="191" y2="236" stroke="#8a7a64" stroke-width="1.5"/>
+              <line x1="176" y1="220" x2="197" y2="232" stroke="#8a7a64" stroke-width="1.5"/>
+              <line x1="164" y1="228" x2="176" y2="220" stroke="#8a7a64" stroke-width="1"/>
+              <line x1="185" y1="240" x2="197" y2="232" stroke="#8a7a64" stroke-width="1"/>
+            </g>
+            <!-- Furniture floor 1 (left room) - bed shape -->
+            <polygon points="162,222 192,240 188,248 158,230" fill="#c0a888" opacity="0.5" rx="1"/>
+            <!-- Furniture right room - table -->
+            <polygon points="280,168 308,153 312,162 284,177" fill="#b89870" opacity="0.45" rx="1"/>
+            <polygon points="342,149 365,136 368,145 345,158" fill="#b89870" opacity="0.45" rx="1"/>
+
+            <!-- ══ FLOOR 2 CEILING (z=100, open top) ══ -->
+            <polygon points="150,165 235,215 395,123 310,73" fill="url(#tw-floor2)"/>
+            <!-- Tile grid floor 2 -->
+            <polygon points="150,165 235,215 395,123 310,73" fill="url(#tw-tile2)" opacity="0.6"/>
+            <!-- Interior walls floor 2 -->
+            <line x1="236" y1="180" x2="310" y2="138" stroke="rgba(14,13,11,0.18)" stroke-width="1.2"/>
+            <line x1="192" y1="188" x2="350" y2="98" stroke="rgba(14,13,11,0.12)" stroke-width="0.8"/>
+            <!-- Furniture floor 2 (left room) -->
+            <polygon points="160,176 188,191 184,200 156,185" fill="#b8a888" opacity="0.45"/>
+            <!-- Furniture floor 2 (right room) -->
+            <polygon points="280,122 306,108 310,117 284,131" fill="#b0986a" opacity="0.4"/>
+            <!-- Circular table top -->
+            <ellipse cx="352" cy="99" rx="15" ry="8" fill="#a88850" opacity="0.35" transform="rotate(-20,352,99)"/>
+
+            <!-- ══ FRONT WALL (y=0, z=0..100) ══ -->
+            <polygon points="150,260 310,168 310,73 150,165" fill="url(#tw-front)"/>
+            <!-- Windows front wall floor 1 -->
+            <polygon points="168,235 198,218 198,198 168,215" fill="#8e8578" opacity="0.6" rx="1"/>
+            <polygon points="210,212 240,195 240,175 210,192" fill="#8e8578" opacity="0.6"/>
+            <!-- Windows front wall floor 2 -->
+            <polygon points="168,190 198,173 198,157 168,174" fill="#8e8578" opacity="0.55"/>
+            <polygon points="210,167 240,150 240,134 210,151" fill="#8e8578" opacity="0.55"/>
+            <!-- Front door -->
+            <polygon points="258,184 280,172 280,200 258,212" fill="#7a6e5a" opacity="0.7" rx="1"/>
+            <!-- Floor line on front wall -->
+            <line x1="150" y1="212" x2="310" y2="120" stroke="rgba(14,13,11,0.18)" stroke-width="0.8"/>
+            <!-- Cornice line top front wall -->
+            <line x1="150" y1="165" x2="310" y2="73" stroke="rgba(184,146,42,0.4)" stroke-width="1"/>
+
+            <!-- ══ RIGHT WALL (x=160, z=0..100) ══ -->
+            <polygon points="310,168 395,218 395,123 310,73" fill="url(#tw-right)"/>
+            <!-- Windows right wall floor 1 -->
+            <polygon points="325,196 355,214 355,194 325,176" fill="#8e8578" opacity="0.55"/>
+            <!-- Windows right wall floor 2 -->
+            <polygon points="325,150 355,168 355,148 325,130" fill="#8e8578" opacity="0.5"/>
+            <!-- Floor line right wall -->
+            <line x1="310" y1="120" x2="395" y2="170" stroke="rgba(14,13,11,0.18)" stroke-width="0.8"/>
+            <!-- Cornice line top right wall -->
+            <line x1="310" y1="73" x2="395" y2="123" stroke="rgba(184,146,42,0.4)" stroke-width="1"/>
+
+            <!-- ══ GOLD EDGE HIGHLIGHTS ══ -->
+            <!-- Vertical edges -->
+            <line x1="150" y1="165" x2="150" y2="260" stroke="#b8922a" stroke-width="1.2" opacity="0.7"/>
+            <line x1="310" y1="73" x2="310" y2="168" stroke="#b8922a" stroke-width="1.2" opacity="0.7"/>
+            <line x1="395" y1="123" x2="395" y2="218" stroke="#b8922a" stroke-width="1" opacity="0.5"/>
+            <line x1="235" y1="215" x2="235" y2="310" stroke="#b8922a" stroke-width="1" opacity="0.5"/>
+            <!-- Top edges -->
+            <polyline points="150,165 235,215 395,123 310,73 150,165" fill="none" stroke="#b8922a" stroke-width="1.2" opacity="0.7"/>
+            <!-- Mid-floor edges -->
+            <polyline points="150,212 235,262 395,170 310,120 150,212" fill="none" stroke="rgba(14,13,11,0.2)" stroke-width="0.8"/>
+            <!-- Base edge -->
+            <polyline points="150,260 235,310 395,218 310,168" fill="none" stroke="rgba(14,13,11,0.25)" stroke-width="1"/>
+
+            <!-- ══ MEASURE LINES (decorative) ══ -->
+            <g opacity="0.3">
+              <line x1="100" y1="260" x2="100" y2="165" stroke="#b8922a" stroke-width="0.7" stroke-dasharray="2,2"/>
+              <line x1="96" y1="260" x2="104" y2="260" stroke="#b8922a" stroke-width="0.7"/>
+              <line x1="96" y1="165" x2="104" y2="165" stroke="#b8922a" stroke-width="0.7"/>
+              <text x="88" y="215" font-family="monospace" font-size="6" fill="#b8922a" text-anchor="middle">12m</text>
+            </g>
+
+            <!-- ══ FLOOR LABELS ══ -->
+            <text x="130" y="200" font-family="monospace" font-size="7" fill="rgba(14,13,11,0.3)" text-anchor="middle">P1</text>
+            <text x="130" y="155" font-family="monospace" font-size="7" fill="rgba(14,13,11,0.3)" text-anchor="middle">P2</text>
+
+          </svg>
+
+          <!-- Floor selector -->
+          <div class="mock-twin-floors">
+            <div class="mtf-label">Piano</div>
+            <button class="mtf-btn">P2</button>
+            <div class="mtf-sep"></div>
+            <button class="mtf-btn mtf-active">P1</button>
+            <div class="mtf-sep"></div>
+            <button class="mtf-btn">PT</button>
+            <div class="mtf-sep"></div>
+            <button class="mtf-btn">Giardino</button>
+          </div>
+
+          <!-- Zoom controls -->
+          <div class="mock-twin-zoom">
+            <button class="mtz-btn">
+              <svg viewBox="0 0 14 14" fill="none"><line x1="7" y1="3" x2="7" y2="11" stroke="currentColor" stroke-width="1.2"/><line x1="3" y1="7" x2="11" y2="7" stroke="currentColor" stroke-width="1.2"/></svg>
+            </button>
+            <button class="mtz-btn">
+              <svg viewBox="0 0 14 14" fill="none"><line x1="3" y1="7" x2="11" y2="7" stroke="currentColor" stroke-width="1.2"/></svg>
+            </button>
+            <button class="mtz-btn" style="margin-top:4px;">
+              <svg viewBox="0 0 14 14" fill="none"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9" stroke="currentColor" stroke-width="1.1"/></svg>
+            </button>
+          </div>
+
+          <!-- Bottom info -->
+          <div class="mock-twin-info">
+            <span class="mti-name">Villa Malcontenta</span>
+            <div class="mti-meta">
+              <span>1.240 mq</span>
+              <span>3 piani</span>
+              <span>18 ambienti</span>
+              <span>Brenta Riviera</span>
+            </div>
+            <span class="mti-badge">Gemello Digitale</span>
+          </div>
+
+        </div><!-- /mock-twin-viewer -->
+      </div><!-- /mock-twin-wrapper -->
+    </div><!-- /mock-panel-twin -->
+
+  </div><!-- /dashboard-mockup -->
 
   <!-- Feature list -->
   <div class="features-list">
@@ -2850,6 +3273,15 @@ body {
      SCROLL REVEAL SCRIPT
 ═══════════════════════════════════ -->
 <script>
+  function switchMockView(targetId, btn) {
+    ['mock-panel-dash','mock-panel-twin'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.style.display = id === targetId ? '' : 'none';
+    });
+    btn.closest('.mock-view-switcher').querySelectorAll('.mvs-tab').forEach(t => t.classList.remove('mvs-active'));
+    btn.classList.add('mvs-active');
+  }
+
   const revealEls = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
