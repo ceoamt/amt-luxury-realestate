@@ -978,6 +978,23 @@ body {
   color: var(--gold);
 }
 
+.mock-thumb img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+}
+.mock-thumb-label {
+  position: absolute;
+  bottom: 6px; left: 8px;
+  font-family: var(--f-mono);
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(250,248,244,0.9);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  z-index: 1;
+}
+
 /* Sidebar gallery nav item highlight */
 .mock-nav-gallery {
   color: var(--gold) !important;
@@ -2594,28 +2611,20 @@ body {
           </div>
           <div class="mock-gallery-grid">
             <div class="mock-thumb mock-thumb--wide">
-              <div class="mock-thumb-ph">
-                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
-                <span>Salone</span>
-              </div>
+              <img src="https://images.unsplash.com/photo-1742724769470-4f921b700c71?auto=format&fit=crop&w=700&q=80" alt="Salone" loading="lazy">
+              <span class="mock-thumb-label">Salone</span>
             </div>
             <div class="mock-thumb">
-              <div class="mock-thumb-ph">
-                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
-                <span>Esterno</span>
-              </div>
+              <img src="https://images.unsplash.com/photo-1652677447709-51228eb8b3b9?auto=format&fit=crop&w=400&q=80" alt="Esterno" loading="lazy">
+              <span class="mock-thumb-label">Esterno</span>
             </div>
             <div class="mock-thumb">
-              <div class="mock-thumb-ph">
-                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
-                <span>Camera</span>
-              </div>
+              <img src="https://images.unsplash.com/photo-1767050371633-675072d4bed7?auto=format&fit=crop&w=400&q=80" alt="Camera" loading="lazy">
+              <span class="mock-thumb-label">Camera</span>
             </div>
             <div class="mock-thumb">
-              <div class="mock-thumb-ph">
-                <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="2" width="14" height="11" rx="1" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="0.8"/><path d="M1 11l4-4 3 2.5 3-3.5 5 5" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/></svg>
-                <span>Cucina</span>
-              </div>
+              <img src="https://images.unsplash.com/photo-1683629357963-adf2b1fa9ad9?auto=format&fit=crop&w=400&q=80" alt="Cucina" loading="lazy">
+              <span class="mock-thumb-label">Cucina</span>
             </div>
             <div class="mock-thumb mock-thumb--more">
               <div class="mock-thumb-ph">
@@ -2797,14 +2806,7 @@ body {
     <!-- Item 1 — grande, salone principale -->
     <div class="gallery-item">
       <div class="gallery-item-inner">
-        <div class="gallery-placeholder">
-          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
-            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="gallery-placeholder-label">Salone principale</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1775416344186-3d2d90cb0f5d?auto=format&fit=crop&w=1400&q=85" alt="Salone degli Affreschi — Villa Malcontenta" loading="lazy">
       </div>
       <div class="gallery-caption">
         <div class="gallery-caption-title">Salone dei Specchi</div>
@@ -2815,14 +2817,7 @@ body {
     <!-- Item 2 — vista esterna -->
     <div class="gallery-item">
       <div class="gallery-item-inner">
-        <div class="gallery-placeholder">
-          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
-            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="gallery-placeholder-label">Vista esterna</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1652677447709-51228eb8b3b9?auto=format&fit=crop&w=1000&q=85" alt="Facciata sul Brenta — Villa Malcontenta" loading="lazy">
       </div>
       <div class="gallery-caption">
         <div class="gallery-caption-title">Facciata sul Brenta</div>
@@ -2833,14 +2828,7 @@ body {
     <!-- Item 3 -->
     <div class="gallery-item">
       <div class="gallery-item-inner">
-        <div class="gallery-placeholder">
-          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
-            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="gallery-placeholder-label">Camera padronale</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1767050371633-675072d4bed7?auto=format&fit=crop&w=900&q=85" alt="Camera padronale — Villa Malcontenta" loading="lazy">
       </div>
       <div class="gallery-caption">
         <div class="gallery-caption-title">Camera padronale</div>
@@ -2851,14 +2839,7 @@ body {
     <!-- Item 4 -->
     <div class="gallery-item">
       <div class="gallery-item-inner">
-        <div class="gallery-placeholder">
-          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
-            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="gallery-placeholder-label">Cucina</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1683629357963-adf2b1fa9ad9?auto=format&fit=crop&w=900&q=85" alt="Cucina professionale — Villa Malcontenta" loading="lazy">
       </div>
       <div class="gallery-caption">
         <div class="gallery-caption-title">Cucina professionale</div>
@@ -2869,14 +2850,7 @@ body {
     <!-- Item 5 -->
     <div class="gallery-item">
       <div class="gallery-item-inner">
-        <div class="gallery-placeholder">
-          <svg class="gallery-placeholder-icon" viewBox="0 0 36 36" fill="none">
-            <rect x="3" y="7" width="30" height="22" rx="2" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="12" cy="15" r="3" stroke="currentColor" stroke-width="1.5"/>
-            <path d="M3 24l8-7 6 5 5-4 11 10" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          <span class="gallery-placeholder-label">Giardino</span>
-        </div>
+        <img src="https://images.unsplash.com/photo-1697393009716-4341aaa3a198?auto=format&fit=crop&w=900&q=85" alt="Giardino storico — Villa Malcontenta" loading="lazy">
       </div>
       <div class="gallery-caption">
         <div class="gallery-caption-title">Giardino storico</div>
