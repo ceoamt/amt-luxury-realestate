@@ -1089,6 +1089,26 @@ body {
   width: 100%;
 }
 
+/* ─── Tab hint animation — fires once when mockup enters view ─── */
+@keyframes tabHint {
+  0%   { transform: translateY(0) scale(1); }
+  35%  { transform: translateY(-6px) scale(1.06);
+         background: rgba(255,255,255,0.75);
+         color: var(--ink);
+         box-shadow: 0 6px 18px rgba(184,146,42,0.18); }
+  65%  { transform: translateY(-2px) scale(1.02); }
+  100% { transform: translateY(0) scale(1); }
+}
+.mvs-hint-active .mvs-tab:not(.mvs-active):nth-child(2) {
+  animation: tabHint 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.0s 1 both;
+}
+.mvs-hint-active .mvs-tab:not(.mvs-active):nth-child(3) {
+  animation: tabHint 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.22s 1 both;
+}
+.mvs-hint-active .mvs-tab:not(.mvs-active):nth-child(4) {
+  animation: tabHint 0.65s cubic-bezier(0.34,1.56,0.64,1) 1.44s 1 both;
+}
+
 /* Live demo badge */
 .mvs-live-badge {
   margin-left: auto;
@@ -3455,6 +3475,18 @@ body {
   }, { threshold: 0.12 });
 
   revealEls.forEach(el => obs.observe(el));
+
+  /* ─── Tab hint: bounce inactive tabs once on scroll-into-view ─── */
+  const _switcher = document.querySelector('.mock-view-switcher');
+  if (_switcher) {
+    const _hIo = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        _hIo.disconnect();
+        _switcher.classList.add('mvs-hint-active');
+      }
+    }, { threshold: 0.8 });
+    _hIo.observe(_switcher);
+  }
 </script>
 
 <!-- Three.js importmap -->
